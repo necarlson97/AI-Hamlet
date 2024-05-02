@@ -1,15 +1,17 @@
 shader_type spatial;
 
 uniform sampler2D heightmap;  // Assign your heightmap texture here
-uniform float max_height : hint_range(10, 2000) = 200;
+uniform float max_height : hint_range(10, 500) = 40;
 
 // Colors
-const int color_count = 6;
+const int color_count = 8;
 const vec3 height_colors[color_count] = {
 	vec3(0, 0, 0), // deep_ocean TODO
 	vec3(0.631, 0.643, 0.600), // shallow_ocean TODO
 	vec3(0.980, 0.929, 0.804), // sand
+	vec3(0.800, 0.835, 0.682), // high_grass
 	vec3(0.914, 0.929, 0.788), // low_grass
+	vec3(0.800, 0.835, 0.682), // high_grass
 	vec3(0.800, 0.835, 0.682), // high_grass
 	vec3(0.631, 0.643, 0.600) // ash
 };

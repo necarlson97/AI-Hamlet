@@ -50,6 +50,8 @@ func _process(delta):
 	update_label()
 	
 func update_needs(delta):
+	if sun == null:
+		return
 	var day_delta = delta * sun.get_days_per_second()
 	# What is the best way to get a node we know will exist?
 	for need in change_rates.keys():

@@ -87,3 +87,6 @@ Longer term:
 		would be cool to use something like Spacescape for night, then somethng for
 		day, and use curves to blend between them
 		https://www.youtube.com/watch?v=NtVABru6OXE
+	Diagetic viewing:
+		would be cool if viewing was done 'manually' as the king or ambassator or something,
+		or even through like birds that fly overhead, or animals in the woods - that kind of thing

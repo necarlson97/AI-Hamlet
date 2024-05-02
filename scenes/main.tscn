@@ -8,10 +8,11 @@
 [node name="Main" type="Node3D"]
 
 [node name="Camera" parent="." instance=ExtResource("1_eugi5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.541968, 2.09573, 9.05443)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.541968, 2.09573, 12.2743)
+near = 0.5
 
 [node name="Island" parent="." instance=ExtResource("1_5gj7v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -321.35, 0, 173.584)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -393.193, 0, 217.645)
 
 [node name="Sun" parent="." instance=ExtResource("2_y8t1k")]
 
