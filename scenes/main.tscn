@@ -11,7 +11,7 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.541968, 2.09573, 9.05443)
 
 [node name="Island" parent="." instance=ExtResource("1_5gj7v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -333.61, 0, 173.584)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -321.35, 0, 173.584)
 
 [node name="Sun" parent="." instance=ExtResource("2_y8t1k")]
 

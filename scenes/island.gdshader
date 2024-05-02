@@ -19,23 +19,6 @@ void vertex() {
     // Sample the height from the heightmap and adjust the vertex position
     float height = texture(heightmap, UV).r;
     VERTEX.y = height * max_height;
-	
-	// Sample heights at nearby points to approximate derivatives
-    float height_x_plus = texture(heightmap, UV + vec2(0.01, 0.0)).r;  // Right
-    float height_x_minus = texture(heightmap, UV - vec2(0.01, 0.0)).r;  // Left
-    float height_y_plus = texture(heightmap, UV + vec2(0.0, 0.01)).r;  // Up
-    float height_y_minus = texture(heightmap, UV - vec2(0.0, 0.01)).r;  // Down
-
-    // Approximate partial derivatives
-    float ddx = (height_x_plus - height_x_minus) * 0.5;
-    float ddy = (height_y_plus - height_y_minus) * 0.5;
-
-    // Compute tangent and bitangent
-    vec3 tangent = vec3(0.01, ddx * max_height, 0.0);
-    vec3 bitangent = vec3(0.0, ddy * max_height, 0.01);
-
-    // Compute normal
-    NORMAL = normalize(cross(tangent, bitangent));
 }
 
 void fragment() {
@@ -53,4 +36,6 @@ void fragment() {
 	ALBEDO = base_color;
     // Blend base color with slope color based on steepness
     vec3 final_color = mix(base_color, slope_color, clamp(slope, 0.0, 1.0));
+	ROUGHNESS = 1.0;
+	SPECULAR = 0.1;
 }
