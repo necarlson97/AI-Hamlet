@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2v44o4ptru"]
+
+[ext_resource type="Script" path="res://scenes/GodCam.gd" id="1_17op0"]
+[ext_resource type="PackedScene" uid="uid://n3nppds34dwx" path="res://scenes/person.tscn" id="1_msnqa"]
+[ext_resource type="PackedScene" uid="uid://cfisd4tftasrh" path="res://scenes/sun.tscn" id="2_y8t1k"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.39751)
+script = ExtResource("1_17op0")
+
+[node name="Sun" parent="." instance=ExtResource("2_y8t1k")]
+
+[node name="Person" parent="." instance=ExtResource("1_msnqa")]

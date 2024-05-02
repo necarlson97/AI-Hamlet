@@ -1,0 +1,89 @@
+todo:
+	need to figure out the psychology metrics. Happiness vs sadness? Order vs chaos?
+	Perhaps for now we have the following spectrum (each is actually a 0-1 number, but we break
+	it down to these tags for simplicity)
+		* 'happiness' = joyful vs content vs miserable
+		* 'socability' = bonded vs aquanted vs isolated
+		* 'hygiene' = clean vs tidy vs filthy
+		* 'order' = opressed vs regulated vs chaotic 
+		
+	Then these have a chance to trigger binary good/bad states:
+		* pregnant (create new person in 280 days) = joyful or content, bonded
+		* vaccation (skip work, +socability, -order) = joyful
+		* play hookey (skip work, +hapiness) = miserable, regulated or chaotic
+		* contagious (skip work) = tidy or filthy, aquanted or socable
+		* deathly sick (die) = filthy, aquanted or isolated
+		* home injury (skip work) = tidy or filthy, aquanted or isolated
+		* mortal accedent (die) = isolated, tidy or filthy
+		* temper tantrum (fight others for a day) = miserable, aquanted or isolated, regulated or chaotic
+		* sociopathic break (fight others until dead) = miserable, isolated
+	
+Buildings:
+	Residence:
+		tent - 1 residents, 1 fibre, 1 day (50% chance of death in winter)
+		yurt - 2 residents, 1 fibre + 1 wood, 2 days (50% chance of death in winter if not lit by firewood)
+		shack - 2 residents, 3 wood, 3 days (50% chance of death in winter if not lit by firewood)
+		
+		cabin - 2 residents, 6 wood, 3 days (10% chance of death in winter if not lit by firewood)
+		cottage - 4 residents, 4 wood + 2 stone + 4 fibre, 10 days
+		ranch - 6 residents, 8 wood + 4 stone + 2 ingot, 10 days
+		
+		parsonage - 1 residents, 3 wood + 3 fibre + 1 ingot, +1 hapiness +1 order
+		villa - 2 residents, 4 wood + 2 stone + 3 ingot, +2 hapiness 
+		manor house - 4 residents, 8 wood + 4 stone + 4 ingot, +2 order
+		
+		longhouse - 8 residents, 10 wood, 4 days (10% chance of death in winter if not lit by firewood)
+		guild hall - 8 residences, 12 wood + 6 stone, 8 days
+		great hall - 8 residences, 6 wood + 10 stone + 4 ingot, 20 days
+		
+	Industry:
+		raw > processed
+		single deposit of thing/renewable deposit
+		X. different levels of buildings that allow you to turn 1 raw into 1+x processed
+		
+		fibre > cloth:
+			bush/field
+			1. weaving mat
+			2. canvas loom
+			3. textile mill
+		logs > planks:
+			tree/forestry
+			1. logging camp
+			2. sawmill
+			3. carpentry shop
+		rocks > cut stone:
+			boulder/quarry
+			1. cutting station
+			2. masonry
+			3. scluptor studio
+		ore > ingot:
+			vein/mine
+			1. bloomery
+			2. foundry
+			3. forge
+			
+Everyone needs '1' food a day. Food can be gotten from:
+	* fishing = 4 meals
+	* gathering fruit = 6 meals
+	* hunting rabbits = 10 meals
+	* hunting deer = 200 meals
+
+Colors:
+	#CCD5AE - tea (0.800, 0.835, 0.682)
+	#E9EDC9 - pistachio (0.914, 0.929, 0.788)
+	#989E6A - moss (0.596, 0.620, 0.416)
+	#FEFAE0 - cream (0.996, 0.980, 0.878)
+	#FAEDCD - canvas (0.980, 0.929, 0.804)
+	#D4A373 - buff (0.831, 0.639, 0.451)
+	#8B735B - cyote (0.545, 0.451, 0.357)
+	#B6BAAE - silver (0.714, 0.729, 0.682)
+	#A1A499 - ash (0.631, 0.643, 0.600)
+	#54574D - ebony (0.329, 0.341, 0.302)
+	#aae3dc - shallows (0.667, 0.890, 0.863)
+	#9dafe3 - depths (0.616, 0.686, 0.890)
+	
+Longer term:
+	Skybox:
+		would be cool to use something like Spacescape for night, then somethng for
+		day, and use curves to blend between them
+		https://www.youtube.com/watch?v=NtVABru6OXE

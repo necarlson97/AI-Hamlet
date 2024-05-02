@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtn012wnjwq0y"]
+
+[ext_resource type="PackedScene" uid="uid://bk3ib1e0yssh0" path="res://hamlet.blend" id="1_js26n"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="hamlet" parent="." instance=ExtResource("1_js26n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0314889, 0, -0.516367)
+
+[editable path="hamlet"]
