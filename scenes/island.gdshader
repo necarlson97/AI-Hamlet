@@ -13,7 +13,7 @@ const vec3 height_colors[color_count] = {
 	vec3(0.914, 0.929, 0.788), // low_grass
 	vec3(0.800, 0.835, 0.682), // high_grass
 	vec3(0.800, 0.835, 0.682), // high_grass
-	vec3(0.631, 0.643, 0.600) // ash
+	vec3(0.631, 0.643, 0.600) // ashd
 };
 const vec3 slope_color = vec3(0.714, 0.729, 0.682);
 

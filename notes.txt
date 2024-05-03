@@ -90,3 +90,8 @@ Longer term:
 	Diagetic viewing:
 		would be cool if viewing was done 'manually' as the king or ambassator or something,
 		or even through like birds that fly overhead, or animals in the woods - that kind of thing
+
+Code snippets:
+, with the addition that:
+	# * Should any edges be longer than max_length,
+	# break that into a chain where the distances are each less than max_length

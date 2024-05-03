@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://w85ps3kir0ll"]
+[gd_scene load_steps=13 format=3 uid="uid://w85ps3kir0ll"]
 
 [ext_resource type="Script" path="res://scenes/island.gd" id="1_orkfe"]
 [ext_resource type="Shader" path="res://scenes/island.gdshader" id="2_mtc33"]
@@ -20,11 +20,6 @@ ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.1
 ambient_light_energy = 0.2
 tonemap_mode = 2
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_sd1vb"]
-geometry_parsed_geometry_type = 1
-cell_size = 0.5
-cell_height = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5tus1"]
 render_priority = 0
@@ -61,25 +56,16 @@ shadow_reverse_cull_face = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fsmin")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_sd1vb")
-
-[node name="Water" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="Water" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_dn5vo")
-skeleton = NodePath("../..")
 
-[node name="Land" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="Land" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.5, 0)
 gi_lightmap_scale = 3
 mesh = SubResource("PlaneMesh_udq8u")
-skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Land"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Land"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Land/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Land/StaticBody3D"]
 transform = Transform3D(15.625, 0, 0, 0, 15.625, 0, 0, 0, 15.625, 0, 0, 0)
 shape = ExtResource("3_s5piv")
-
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="NavigationRegion3D/Land"]
-height = 12.5
-vertices = PackedVector3Array(-1976.54, 0, -1974.88, 1984.57, 0, -1987.02, 1967.4, 0, 1978.33, -1976.82, 0, 1977.41)

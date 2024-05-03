@@ -26,9 +26,9 @@ func _process(delta):
 	pass
 	
 func get_nodes():
-	collision = get_node("NavigationRegion3D/Land/StaticBody3D/CollisionShape3D")
-	land = get_node("NavigationRegion3D/Land");
-	water = get_node("NavigationRegion3D/Water");
+	collision = get_node("Land/StaticBody3D/CollisionShape3D")
+	land = get_node("Land");
+	water = get_node("Water");
 	
 func update_map():
 	# For now, only run in editor
