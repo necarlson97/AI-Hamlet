@@ -11,9 +11,9 @@ enum Needs {
 var needs = {
 	# Bodily
 	Needs.HUNGER: 0,
-	Needs.SLEEPINESS: 9.92,
-	Needs.FATIGUE: 8.92,
-	Needs.BATHROOM: 8.92, # TODO 0
+	Needs.SLEEPINESS: 0,
+	Needs.FATIGUE: 0,
+	Needs.BATHROOM: 0,
 	# Psych
 	Needs.HAPPINESS: 9,
 	Needs.SOCIABILITY: 5,

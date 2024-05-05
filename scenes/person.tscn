@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://n3nppds34dwx"]
+[gd_scene load_steps=7 format=3 uid="uid://n3nppds34dwx"]
 
 [ext_resource type="Script" path="res://scenes/Person.gd" id="1_200oj"]
 [ext_resource type="Script" path="res://scenes/Somatic.gd" id="1_i415x"]
+[ext_resource type="PackedScene" uid="uid://bbni2vqrsrgkl" path="res://scenes/path_agent.tscn" id="2_u41tc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dmpht"]
 
@@ -44,6 +45,8 @@ script = ExtResource("1_200oj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.680735, 0)
 mesh = SubResource("ArrayMesh_1kd1p")
 skeleton = NodePath("")
+
+[node name="PathAgent" parent="." instance=ExtResource("2_u41tc")]
 
 [node name="Somatic" type="Node" parent="."]
 script = ExtResource("1_i415x")

@@ -29,11 +29,24 @@ func test_network():
 	for child in get_children():
 		if "Destination" in child.name:
 			destinations.append(create_node(child))
+			
 
 func _process(delta):
 	# For debugging
 	for edge in mst:
 		DebugDraw3D.draw_line(edge.from.global_position, edge.to.global_position, Color.WHITE_SMOKE)
+
+func _physics_process(delta):
+	# Snap destinations to ground
+	# TODO only need to do when created
+	var space_state = get_world_3d().direct_space_state
+	for d in destinations:
+		var gp = d.global_position
+		for vec in [Vector3(0, 100, 0), Vector3(0, -100, 0)]:
+			var query = PhysicsRayQueryParameters3D.create(gp, gp+vec)
+			var result = space_state.intersect_ray(query)
+			if result:
+				d.global_position = result.position
 
 var mst = []
 var visited = {}
@@ -87,12 +100,11 @@ func find_path_to_point(from: Vector3, to: Vector3) -> Array[Node3D]:
 
 	# Check if the path is already cached
 	if _path_cache.has(path_key):
-		print("Using cached path")
-		return _path_cache[path_key]
+		return _path_cache[path_key].duplicate()
 
 	# Find path in MST from entry to exit
 	var path = find_path_in_mst(entry_node, exit_node)
-	_path_cache[path_key] = path  # Cache the newly found path
+	_path_cache[path_key] = path.duplicate()  # Cache the newly found path
 	return path
 
 func find_path_in_mst(start_node: PathfinderNode, end_node: PathfinderNode) -> Array[Node3D]:

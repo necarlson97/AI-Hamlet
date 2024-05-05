@@ -7,23 +7,43 @@ var path: Array[Node3D] = []
 var next_waypoint: Node3D = null
 var last_waypoint: Node3D = null
 
-var speed = 10.0;
+# TODO for testing
+var speed = 100.0 # 2.0;
 
-var t = 0.0;
 func _process(delta):
-	# For now, just choose random points, and go there
-	t += delta * speed
+	# Move toward next waypoint
 	if path == []:
+		# For now, just choose a random path for testing
 		var target = choose_random_destination()
 		path = pathfinder.find_path_to_point(global_position, target.global_position)
-	if next_waypoint == null or global_position.distance_to(next_waypoint.global_position) < 0.01:
+
+	if next_waypoint == null or is_close_enough():
 		last_waypoint = next_waypoint
 		next_waypoint = path.pop_front()
-		t = 0
 	if last_waypoint == null:
-		last_waypoint = self  # Creates weird slow lerp on first, but whatever
-	
-	global_position = global_position.move_toward(next_waypoint.global_position, delta * speed)
+		last_waypoint = self
+
+	get_parent().global_position = global_position.move_toward(next_waypoint.global_position, delta * speed)
+
+func _physics_process(delta):
+	# TODO testing
+	return
+	var space_state = get_world_3d().direct_space_state
+	var gp = global_position
+	for vec in [Vector3(0, 100, 0), Vector3(0, -100, 0)]:
+		var query = PhysicsRayQueryParameters3D.create(gp, gp+vec)
+		var result = space_state.intersect_ray(query)
+		if result:
+			global_position = result.position
+			
+func is_close_enough():
+	# Because we snap y to the island collider, we want to
+	# only check x & z
+	var my_gp = global_position * Vector3(1, 0, 1)
+	var wp_gp = next_waypoint.global_position * Vector3(1, 0, 1)
+	return my_gp.distance_to(wp_gp) < 0.1
 	
 func choose_random_destination() -> Node3D:
-	return pathfinder.destinations.pick_random()
+	var d = pathfinder.destinations.pick_random()
+	return d
+

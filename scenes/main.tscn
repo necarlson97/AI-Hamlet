@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2v44o4ptru"]
+[gd_scene load_steps=6 format=3 uid="uid://c2v44o4ptru"]
 
 [ext_resource type="PackedScene" uid="uid://w85ps3kir0ll" path="res://scenes/island.tscn" id="1_5gj7v"]
 [ext_resource type="PackedScene" uid="uid://bj6h33drht5ew" path="res://scenes/camera.tscn" id="1_eugi5"]
 [ext_resource type="PackedScene" uid="uid://n3nppds34dwx" path="res://scenes/person.tscn" id="1_msnqa"]
+[ext_resource type="PackedScene" uid="uid://crsnb6t0s56gf" path="res://scenes/pathfinder.tscn" id="1_n8re0"]
 [ext_resource type="PackedScene" uid="uid://cfisd4tftasrh" path="res://scenes/sun.tscn" id="2_y8t1k"]
 
 [node name="Main" type="Node3D"]
+
+[node name="Pathfinder" parent="." instance=ExtResource("1_n8re0")]
 
 [node name="Camera" parent="." instance=ExtResource("1_eugi5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.541968, 2.09573, 12.2743)
@@ -17,3 +20,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -393.193, 0, 217.645)
 [node name="Sun" parent="." instance=ExtResource("2_y8t1k")]
 
 [node name="Person" parent="." instance=ExtResource("1_msnqa")]
+
+[node name="Person2" parent="." instance=ExtResource("1_msnqa")]
+
+[node name="Person3" parent="." instance=ExtResource("1_msnqa")]
+
+[node name="Person4" parent="." instance=ExtResource("1_msnqa")]
+
+[node name="Person5" parent="." instance=ExtResource("1_msnqa")]
+
+[node name="Person6" parent="." instance=ExtResource("1_msnqa")]
+
+[node name="Person7" parent="." instance=ExtResource("1_msnqa")]
