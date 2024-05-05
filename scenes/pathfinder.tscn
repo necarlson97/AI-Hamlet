@@ -1,11 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://crsnb6t0s56gf"]
+[gd_scene load_steps=4 format=3 uid="uid://crsnb6t0s56gf"]
 
 [ext_resource type="Script" path="res://scenes/pathfinder.gd" id="1_e30eo"]
+[ext_resource type="PackedScene" uid="uid://bbni2vqrsrgkl" path="res://scenes/path_agent.tscn" id="2_qqwp1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rhbop"]
 
 [node name="Pathfinder" type="Node3D"]
 script = ExtResource("1_e30eo")
+
+[node name="PathAgent" parent="." instance=ExtResource("2_qqwp1")]
+
+[node name="PathAgent2" parent="." instance=ExtResource("2_qqwp1")]
+
+[node name="PathAgent3" parent="." instance=ExtResource("2_qqwp1")]
+
+[node name="PathAgent4" parent="." instance=ExtResource("2_qqwp1")]
+
+[node name="PathAgent5" parent="." instance=ExtResource("2_qqwp1")]
 
 [node name="Destination" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45731, 6.41984, 3.71037)

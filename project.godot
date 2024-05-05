@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 TestCameraManager="*res://addons/test_camera_3d/test_camera_manager.gd"
+UtilsNode="*res://scenes/utils.gd"
 
 [editor_plugins]
 

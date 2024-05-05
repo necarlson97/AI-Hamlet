@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7quoqxyyqlpa"]
+[gd_scene load_steps=3 format=3 uid="uid://c7quoqxyyqlpa"]
 
 [ext_resource type="Script" path="res://scenes/PathfinderNode.gd" id="1_ug82e"]
 
+[sub_resource type="PrismMesh" id="PrismMesh_u4p4k"]
+size = Vector3(1, 2, 1)
+
 [node name="PathfinderNode" type="Node3D"]
 script = ExtResource("1_ug82e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PrismMesh_u4p4k")
