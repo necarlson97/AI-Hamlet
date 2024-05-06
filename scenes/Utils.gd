@@ -1,5 +1,8 @@
-extends Node
+extends Node3D
 class_name Utils
+
+# View debug stuff TODO
+const debug = false
 
 func get_nodes_by_script(script_name: String) -> Array:
 	# Take a string of the filename, such as pathfinder.gd
@@ -12,6 +15,18 @@ func get_node_by_script(script_name: String):
 	assert(res != null, "Could not find a %s"%script_name)
 	return res
 
+func place_on_ground(node: Node3D):
+	# Raycast to place node on ground
+	var space_state = get_world_3d().direct_space_state
+	var ray_length = 200
+	
+	var gp = node.global_position
+	for vec in [Vector3(0, ray_length, 0), Vector3(0, -ray_length, 0)]:
+		var query = PhysicsRayQueryParameters3D.create(gp, gp+vec)
+		var result = space_state.intersect_ray(query)
+		if result:
+			node.global_position = result.position
+			
 static func static_get_nodes_by_script(node: Node, script_name: String) -> Array:
 	if node.get_script() and script_name in node.get_script().get_path():
 		return [node]

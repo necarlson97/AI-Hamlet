@@ -3,13 +3,17 @@ class_name Person
 const Task = preload("res://scenes/Task.gd").Task
 
 @onready var somatic = get_node("Somatic")
+@onready var path_agent = get_node("PathAgent")
 var task_queue = PriorityQueue.new()
 
 var role = ""
 #var home : Home = null
 
-func _init(_role=null):
-	role = _role
+func _ready():
+	# For a little variance
+	# TODO could be dependent on somatic
+	if path_agent:
+		path_agent.speed *= randf_range(0.9, 1.1)
 
 func _process(delta):
 	var current_task = task_queue.get_next_task()

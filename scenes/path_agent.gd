@@ -8,7 +8,7 @@ var next_waypoint: Node3D = null
 var last_waypoint: Node3D = null
 
 # TODO for testing
-var speed = 100.0 # 2.0;
+var speed = 2.0
 
 func _process(delta):
 	# Move toward next waypoint
@@ -25,17 +25,6 @@ func _process(delta):
 
 	get_parent().global_position = global_position.move_toward(next_waypoint.global_position, delta * speed)
 
-func _physics_process(delta):
-	# TODO testing
-	return
-	var space_state = get_world_3d().direct_space_state
-	var gp = global_position
-	for vec in [Vector3(0, 100, 0), Vector3(0, -100, 0)]:
-		var query = PhysicsRayQueryParameters3D.create(gp, gp+vec)
-		var result = space_state.intersect_ray(query)
-		if result:
-			global_position = result.position
-			
 func is_close_enough():
 	# Because we snap y to the island collider, we want to
 	# only check x & z

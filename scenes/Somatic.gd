@@ -1,6 +1,7 @@
 extends Node
 class_name Somatic
 const NeedBasedTask = preload("res://scenes/NeedBasedTask.gd")
+@onready var utils = get_node("/root/UtilsNode")
 
 # Define needs and their default values
 enum Needs {
@@ -77,6 +78,11 @@ func adjust(adjustments):
 
 @onready var label = get_node("Label3D")
 func update_label():
+	if not Utils.debug:
+		label.visible = false
+		return
+	
+	label.visible = true
 	var text = ""
 	for need in needs.keys():
 		var value = needs[need]

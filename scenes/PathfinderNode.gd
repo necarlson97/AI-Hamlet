@@ -10,7 +10,7 @@ static func create(pos: Node3D) -> PathfinderNode:
 	# - and it lets us debug easier
 	var new = PathfinderNodePrefab.instantiate()
 	new.name = ("Node %s" % pos.name.substr(0, 10))
-	new.position = pos.global_position
+	new.global_position = pos.global_position
 	return new as PathfinderNode
 
 func distance_to(target: PathfinderNode) -> float:

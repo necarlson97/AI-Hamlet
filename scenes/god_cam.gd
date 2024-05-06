@@ -16,6 +16,8 @@ func _input(event):
 	handle_input(event)
 
 func _process(delta):
+	# We actually don't want the cam moving faster when spead up
+	delta /= Engine.time_scale
 	if is_free(): process_free_movement(delta)
 	else: process_targeted_movement(delta)
 
@@ -42,13 +44,15 @@ func handle_input(event):
 
 func process_free_movement(delta):
 	var velocity = Vector3()
+	var speed = move_speed
+	if Input.is_key_pressed(KEY_SHIFT): speed *= 2
 	if Input.is_key_pressed(KEY_W): velocity.z -= 1
 	if Input.is_key_pressed(KEY_S): velocity.z += 1
 	if Input.is_key_pressed(KEY_A): velocity.x -= 1
 	if Input.is_key_pressed(KEY_D): velocity.x += 1
 	if Input.is_key_pressed(KEY_SPACE): velocity.y += 1
 	if Input.is_key_pressed(KEY_CTRL): velocity.y -= 1
-	velocity = velocity.normalized() * move_speed
+	velocity = velocity.normalized() * speed
 	translate(velocity * delta)
 
 func process_targeted_movement(delta):

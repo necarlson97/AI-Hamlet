@@ -22,13 +22,12 @@ class PathEdge:
 
 func _ready():
 	test_network()
-	calcualte_mst()
 	
 func test_network():
 	# For testing purposes
 	for child in get_children():
 		if "Destination" in child.name:
-			destinations.append(create_node(child))
+			destinations.append(add_node(child))
 			
 
 func _process(delta):
@@ -36,50 +35,21 @@ func _process(delta):
 	for edge in mst:
 		DebugDraw3D.draw_line(edge.from.global_position, edge.to.global_position, Color.WHITE_SMOKE)
 
-func _physics_process(delta):
-	# Snap destinations to ground
-	# TODO only need to do when created
-	var space_state = get_world_3d().direct_space_state
-	for d in destinations:
-		var gp = d.global_position
-		for vec in [Vector3(0, 100, 0), Vector3(0, -100, 0)]:
-			var query = PhysicsRayQueryParameters3D.create(gp, gp+vec)
-			var result = space_state.intersect_ray(query)
-			if result:
-				d.global_position = result.position
-
 var mst = []
-var visited = {}
-var edges = []
-func calcualte_mst(max_length=40.0):
-	# Calcualte the 'minimum span tree' between all destinations
-	add_edges(destinations[0])
-	
-	while edges.size() > 0:
-		var edge = edges.pop_front()
-		var to_node = edge.to
-
-		if not visited.has(to_node):
-			mst.append(edge)
-			add_edges(to_node)
-
-func add_edges(node):
-	visited[node] = true
-	for target in destinations:
-		if not visited.has(target):
-			edges.append(PathEdge.new(node, target))
-	edges.sort_custom(edge_sort)
-
 func edge_sort(a, b):
 	return a.get_cost() < b.get_cost()
-	
-func create_node(pos: Node3D) -> PathfinderNode:
-	var new = PathfinderNode.create(pos)
-	add_child(new)
-	return new
+
+func add_node(new_destination: Node3D):
+	var new_pfn = PathfinderNode.create(new_destination)
+	add_child(new_pfn)
+	get_node("/root/UtilsNode").place_on_ground(new_pfn)
+	if destinations.size() > 0:
+		var closest = find_closest_node(new_pfn.global_position)
+		mst.append(PathEdge.new(new_pfn, closest))
+	destinations.append(new_pfn)
 
 # memoize intermediate travels through the mst to make future calls faster
-# TODO need to dirty every time we edit the tree
+# TODO need to dirty every time we edit the tree (?)
 var _path_cache = {}
 func find_path_to_point(from: Vector3, to: Vector3) -> Array[Node3D]:
 	# Given a from and to vector:
