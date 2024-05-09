@@ -13,8 +13,10 @@ var target = null  # Can be used to specify a resource or location
 func _init(_priority=2, _target=null):
 	priority = _priority
 	target = _target
-	
+
+var _started = false
 func start(person: Person):
+	_started = true
 	on_start(person)
 	
 	# path to the vecor/node target, if we have one
@@ -26,19 +28,25 @@ func start(person: Person):
 		person.get_node("PathAgent").path_to(target)
 	else:
 		assert(false, "How to path to %s (%s)?"%[target, typeof(target)])
-		
-func has_arrived(person: Person) -> bool:
-	if target == null:
-		return true
-	return person.global_position.distance_to(target) < 1.0
 
 func on_start(person: Person):
 	# Subclass shadows if there is any logic needed on start
 	pass
 
 func perform(person: Person) -> bool:
+	# Try performing, returns true only if we are done
+	# TODO we could call start ourself here, but for now, just report as error
+	assert(_started, "%s (%s) was not started!"%[self, person])
+	return has_arrived(person) and on_perform(person)
+	
+func on_perform(person: Person) -> bool:
 	# Subclass shadows to perform the task
 	return true
+	
+func has_arrived(person: Person) -> bool:
+	if target == null:
+		return true
+	return person.global_position.distance_to(target) < 1.0
 	
 func _to_string():
 	return "(%s) %s - %s" % [priority, get_class(), target]
@@ -52,7 +60,11 @@ class GetItem extends Task:
 		item_name = _item_name
 		
 	func on_start(person: Person):
-		target = Utils.find_closest_to_person(person, "")
+		target = Utils.find_closest_to_person(person, item_name)
+		
+	func on_perform(person: Person) -> bool:
+		# TODO Pick it up!
+		return person.pick_up(target)
 		
 class MakeBlueprint extends Task:
 	# Go to a target vec, and start a building there
@@ -61,11 +73,8 @@ class MakeBlueprint extends Task:
 	func _init(_priority=2, _target=Vector3(0, 0, 0), _building_name="outhouse"):
 		super(_priority, _target)
 		var building  = load("res://scenes/buildings/%s.gd"%_building_name)
-	
-	func on_start(person: Person):
-		target = Utils.find_closest_to_person(person, "")
 		
-	func perform(person: Person) -> bool:
+	func on_perform(person: Person) -> bool:
 		var new_building = building.instantiate()
 		person.get_tree().root.add_child(new_building)
 		building.global_position = person.global_position
@@ -84,9 +93,9 @@ class VisitBoard extends Task:
 		super(_priority)
 	
 	func on_start(person: Person):
-		target = Utils.find_closest_to_person(person, "Bulletin")
+		target = Utils.find_closest_to_person(person, Bulletin)
 		assert(target != null, "Could not find Bulletin")
 		
-	func perform(person: Person) -> bool:
+	func on_perform(person: Person) -> bool:
 		person.add_task(target.get_request())
 		return true

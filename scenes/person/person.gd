@@ -19,6 +19,7 @@ func _process(delta):
 	else:
 		# Go to the nearest place to get new tasks
 		task_queue.add(Task.VisitBoard.new())
+		task_queue.peek().start(self)
 
 func check_task_progress():
 	# If we are where we need to be...
@@ -26,7 +27,21 @@ func check_task_progress():
 		# Try to do the thing...
 		if task_queue.peek().perform(self):
 			# Done!
-			task_queue.next()
+			task_queue.next().start(self)
+
+func pick_up(to_hold: Node3D) -> bool:
+	# Drop anything we are holding
+	drop()
+	$Held.add_child(to_hold)
+	# TODO are there situations where we can't drop?
+	return true
+	
+func drop():
+	for c in $Held.get_children():
+		# TODO I think remove_child is not needed
+		$Held.remove_child(c)
+		# TODO is there, like, a 'dropped' parent node?
+		get_tree().root.add_child(c)
 
 func add_task(task: Task):
 	task_queue.add_task(task)

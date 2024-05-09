@@ -4,20 +4,33 @@ class_name Utils
 # View debug stuff TODO
 const debug = false
 
-static func find_closest_to_person(person: Person, script_name: String, range=100.0):
+static func find_closest_to_person(person: Person, script, range=100.0):
 	# Find the closest X script to the given person (limit range)
 	# TODO dumb that this is duplicated - but either static using 'person' root,
 	# or not static using autoload $Utils root
-	var all = static_get_nodes_by_script(person.get_tree().root, script_name)
+	print("Looking for: %s (%s)"%[script, typeof(script)])
+	
+	var all = []
+	if script is String:
+		print("Getting by script name")
+		all = static_get_nodes_by_script_name(person.get_tree().root, script)
+	else:
+		print("Getting by script type")
+		all = static_get_nodes_by_script(person.get_tree().root, script)
+		
+	print("All:")
+	print(all)
 	var closest = find_closest(person.global_position, all)
-	if closest.distance_to(person) > range:
-		return null
+	print("Closest: %s"%closest)
+	
+	if closest == null: return null
+	if closest.global_position.distance_to(person.global_position) > range: return null
 	return closest
 	
-func find_closest_to(pos: Vector3, script_name: String, range=100.0):
+func find_closest_to(pos: Vector3, script, range=100.0):
 	# Find the closest X script to the given person (limit range)
 	# TODO clever caching?
-	var all = static_get_nodes_by_script(get_tree().root, script_name)
+	var all = static_get_nodes_by_script(get_tree().root, script)
 	var closest = find_closest(pos, all)
 	if closest.distance_to(pos) > range:
 		return null
@@ -35,31 +48,54 @@ static func find_closest(point: Vector3, arr: Array):
 			min_distance = dist
 			closest_node = node
 	return closest_node
-	
-func get_nodes_by_script(script_name: String) -> Array:
+
+# Functions for finding by script type
+func get_nodes_by_script(script: Script) -> Array:
 	# Take a string of the filename, such as pathfinder.gd
-	var res = static_get_nodes_by_script(get_tree().root, script_name)
+	var res = static_get_nodes_by_script(get_tree().root, script)
+	assert(res != [], "Could not find any %s"%script)
+	return res
+func get_node_by_script(script: Script):
+	var res = static_get_node_by_script(get_tree().root, script)
+	assert(res != null, "Could not find a %s"%script)
+	return res
+static func static_get_nodes_by_script(node: Node, script: Script) -> Array:
+	if is_instance_of(node, script):
+		return [node]
+	var res = []
+	for child in node.get_children():
+		res += static_get_nodes_by_script(child, script)
+	return res
+static func static_get_node_by_script(node: Node, script: Script):
+	if is_instance_of(node, script):
+		return node
+	for child in node.get_children():
+		var res = static_get_node_by_script(child, script)
+		if res != null: return res
+	return null
+
+# Functions for finding by script name
+func get_nodes_by_script_name(script_name: String) -> Array:
+	# Take a string of the filename, such as pathfinder.gd
+	var res = static_get_nodes_by_script_name(get_tree().root, script_name)
 	assert(res != [], "Could not find any %s"%script_name)
 	return res
-
-func get_node_by_script(script_name: String):
-	var res = static_get_node_by_script(get_tree().root, script_name)
+func get_node_by_script_name(script_name: String):
+	var res = static_get_node_by_script_name(get_tree().root, script_name)
 	assert(res != null, "Could not find a %s"%script_name)
 	return res
-			
-static func static_get_nodes_by_script(node: Node, script_name: String) -> Array:
+static func static_get_nodes_by_script_name(node: Node, script_name: String) -> Array:
 	if node.get_script() and script_name in node.get_script().get_path():
 		return [node]
 	var res = []
 	for child in node.get_children():
-		res += static_get_nodes_by_script(child, script_name)
+		res += static_get_nodes_by_script_name(child, script_name)
 	return res
-	
-static func static_get_node_by_script(node: Node, script_name: String):
+static func static_get_node_by_script_name(node: Node, script_name: String):
 	if node.get_script() and script_name in node.get_script().get_path():
 		return node
 	for child in node.get_children():
-		var res = static_get_node_by_script(child, script_name)
+		var res = static_get_node_by_script_name(child, script_name)
 		if res != null: return res
 	return null
 

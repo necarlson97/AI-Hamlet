@@ -11,12 +11,12 @@ class_name Bulletin
 var task_queue = PriorityQueue.new()
 
 func _ready():
-	task_queue.add_task(random_build_request())
+	task_queue.add(random_build_request())
 
 func get_request() -> Task:
 	# TODO normally, we will have a priority queue, but for now,
 	# just make a random build order
-	task_queue.add_task(random_build_request())
+	task_queue.add(random_build_request())
 	return task_queue.get_next_task()
 	
 func random_build_request() -> Task:
