@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7quoqxyyqlpa"]
 
-[ext_resource type="Script" path="res://scenes/pathfinding/pathfinder_node.gd" id="1_ug82e"]
+[ext_resource type="Script" path="res://scenes/pathfinding/path_node.gd" id="1_ug82e"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_u4p4k"]
 size = Vector3(1, 2, 1)

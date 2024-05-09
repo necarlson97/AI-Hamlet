@@ -1,16 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2v44o4ptru"]
+[gd_scene load_steps=6 format=3 uid="uid://c2v44o4ptru"]
 
 [ext_resource type="PackedScene" uid="uid://w85ps3kir0ll" path="res://scenes/island/island.tscn" id="1_5gj7v"]
 [ext_resource type="PackedScene" uid="uid://bj6h33drht5ew" path="res://scenes/camera.tscn" id="1_eugi5"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_h3e42"]
 [ext_resource type="PackedScene" uid="uid://n3nppds34dwx" path="res://scenes/person/person.tscn" id="1_msnqa"]
-[ext_resource type="PackedScene" uid="uid://crsnb6t0s56gf" path="res://scenes/pathfinding/pathfinder.tscn" id="1_n8re0"]
 [ext_resource type="PackedScene" uid="uid://cfisd4tftasrh" path="res://scenes/sun.tscn" id="2_y8t1k"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_h3e42")
-
-[node name="Pathfinder" parent="." instance=ExtResource("1_n8re0")]
 
 [node name="Camera" parent="." instance=ExtResource("1_eugi5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.541968, 2.09573, 12.2743)

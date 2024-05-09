@@ -1,6 +1,5 @@
 extends Node3D
-const Task = preload("res://scenes/person/Task.gd").Task
-const Blueprint = preload("res://scenes/person/Task.gd").Blueprint
+class_name Bulletin
 # Where the people check if they have nothing to do - 
 # and where the AI / player will post their requests
 # Can have levels:
@@ -22,4 +21,4 @@ func get_request() -> Task:
 	
 func random_build_request() -> Task:
 	# TODO add a task to build something at a random location
-	return Blueprint.new(Utils.rand_vec())
+	return Task.MakeBlueprint.new(2, Utils.rand_vec())

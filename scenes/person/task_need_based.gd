@@ -1,28 +1,30 @@
-const Task = preload("res://scenes/person/task.gd").Task
+extends Task
+class_name TaskNeedBased
 const Needs = preload("res://scenes/person/somatic.gd").Needs
 
-class TaskNeedBased extends Task:
+# Thresholds  (e.g.: Needs.BATHROOM: 9)
+# Note, they are all required
+static var greater_than = {}
+static var less_than = {}
+
+func _init(_priority=2, _target=null):
+	super(_priority, _target)
 	
-	# Thresholds  (e.g.: Needs.BATHROOM: 9)
-	# Note, they are all required
-	static var greater_than = {}
-	static var less_than = {}
-	
-	func _init(_priority=2, _target=null):
-		super(_priority, _target)
-		
-	static func is_needed(person: Person):
-		for key in greater_than.keys():
-			var value = greater_than[key]
-			if person.somatic.needs[key] < value:
-				return false
-		for key in less_than.keys():
-			var value = greater_than[key]
-			if person.somatic.needs[key] > value:
-				return false
-		return true
-	
-class WetYourself extends NeedBasedTask:
+static func is_needed(person: Person):
+	for key in greater_than.keys():
+		var value = greater_than[key]
+		if person.get_node("Somatic").needs[key] < value:
+			return false
+	for key in less_than.keys():
+		var value = greater_than[key]
+		if person.get_node("Somatic").needs[key] > value:
+			return false
+	return true
+
+
+# TODO for most/all of these, we want particles and lying down or whatever.
+
+class WetYourself extends TaskNeedBased:
 	# its an emergency, you weren't able to find a bathroom in time
 	func _init():
 		greater_than = {Needs.BATHROOM: 9}
@@ -33,7 +35,7 @@ class WetYourself extends NeedBasedTask:
 		print("Emergency! No outhouse found in time for: ", person.name)
 		
 		# Effects that this has on person's mentality
-		person.somatic.adjust({
+		person.adjust({
 			Needs.BATHROOM: -10,
 			Needs.HAPPINESS: -3,
 			Needs.SOCIABILITY: -2,
@@ -41,7 +43,7 @@ class WetYourself extends NeedBasedTask:
 			Needs.ORDER: -2,
 		})
 
-class PassOut extends NeedBasedTask:
+class PassOut extends TaskNeedBased:
 	# its an emergency, you weren't able to find a bed in time
 	func _init():
 		greater_than = {Needs.SLEEPINESS: 9}
@@ -59,7 +61,7 @@ class PassOut extends NeedBasedTask:
 			Needs.HYGIENE: -6,
 		})
 
-class Breather extends NeedBasedTask:
+class Breather extends TaskNeedBased:
 	# its an emergency, you weren't able to find a bed in time
 	func _init():
 		greater_than = {Needs.FATIGUE: 9}

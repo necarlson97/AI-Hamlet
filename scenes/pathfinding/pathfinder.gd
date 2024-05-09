@@ -2,11 +2,11 @@ extends Node3D
 class_name Pathfinder
 
 # The points we want to 'end' at 
-var destinations: Array[PathfinderNode] = []
+var destinations: Array[PathNode] = []
 
 class PathEdge:
-	var from: PathfinderNode
-	var to: PathfinderNode
+	var from: PathNode
+	var to: PathNode
 	func _init(_from, _to):
 		from = _from
 		to = _to
@@ -40,13 +40,13 @@ func edge_sort(a, b):
 	return a.get_cost() < b.get_cost()
 
 func add_node(new_destination: Node3D):
-	var new_pfn = PathfinderNode.create(new_destination)
-	add_child(new_pfn)
-	get_node("/root/UtilsNode").place_on_ground(new_pfn)
+	var new_pn = PathNode.create(new_destination)
+	add_child(new_pn)
+	$"/root/UtilsNode".place_on_ground(new_pn)
 	if destinations.size() > 0:
-		var closest = Utils.find_closest(new_pfn.global_position, destinations)
-		mst.append(PathEdge.new(new_pfn, closest))
-	destinations.append(new_pfn)
+		var closest = Utils.find_closest(new_pn.global_position, destinations)
+		mst.append(PathEdge.new(new_pn, closest))
+	destinations.append(new_pn)
 
 # memoize intermediate travels through the mst to make future calls faster
 # TODO need to dirty every time we edit the tree (?)
@@ -57,8 +57,8 @@ func find_path_to_point(from: Vector3, to: Vector3) -> Array[Node3D]:
 	# (can be leaf or inner node)
 	# then use those to find (and return) the path through the mst
 	# from entry -> exit
-	var entry_node = $Utils.find_closest(from, "PathfinderNode")
-	var exit_node = $Utils.find_closest(to, "PathfinderNode")
+	var entry_node = $Utils.find_closest(from, "PathNode")
+	var exit_node = $Utils.find_closest(to, "PathNode")
 
 	if not entry_node or not exit_node:
 		print("No entry or exit node found.")
@@ -77,7 +77,7 @@ func find_path_to_point(from: Vector3, to: Vector3) -> Array[Node3D]:
 	_path_cache[path_key] = path.duplicate()  # Cache the newly found path
 	return path
 
-func find_path_in_mst(start_node: PathfinderNode, end_node: PathfinderNode) -> Array[Node3D]:
+func find_path_in_mst(start_node: PathNode, end_node: PathNode) -> Array[Node3D]:
 	var queue = []
 	var came_from = {}
 	queue.push_back(start_node)

@@ -1,5 +1,5 @@
 extends "res://scenes/buildings/building.gd"
-const Needs = preload("res://scenes/Person/Somatic.gd").Needs
+const Needs = Somatic.Needs
 
 var occupants = 1
 

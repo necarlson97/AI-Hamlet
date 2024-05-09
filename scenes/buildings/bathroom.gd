@@ -1,5 +1,5 @@
 extends Node3D
-const Needs = preload("res://scenes/Person/Somatic.gd").Needs
+const Needs = Somatic.Needs
 # TODO eventually there will be sub types:
 # outhouse (1), restroom (2-4), showers (5-6) helps hygine, bathhouse (7-10) helps hygine and happiness
 # Also note that every residence is a bathroom, but only for its owners

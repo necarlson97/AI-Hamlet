@@ -2,7 +2,6 @@ extends Node3D
 
 var person_prefab = preload('res://scenes/person/person.tscn')
 var building_prefab = preload('res://scenes/buildings/building.tscn')
-@onready var pathfinder = get_node('Pathfinder')
 
 func _ready():
 	get_node("TimescaleLabel").text = str(Engine.time_scale)
@@ -18,8 +17,8 @@ func _ready():
 		var new = building_prefab.instantiate()
 		add_child(new)
 		new.global_position = v
-		pathfinder.add_node(new)
-		get_node("/root/UtilsNode").place_on_ground(new)
+		$"/root/PathfinderNode".add_node(new)
+		$"/root/UtilsNode".place_on_ground(new)
 		
 func _input(event):
 	if event is InputEventKey and event.pressed:

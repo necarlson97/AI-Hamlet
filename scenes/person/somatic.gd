@@ -1,6 +1,5 @@
 extends Node
 class_name Somatic
-const NeedBasedTask = preload("res://scenes/person/task_need_based.gd")
 @onready var utils = get_node("/root/UtilsNode")
 
 # Define needs and their default values
@@ -38,7 +37,7 @@ var change_rates = {
 
 @onready var sun = get_node_or_null("/root/Main/Sun")
 @onready var need_tasks = [
-	NeedBasedTask.WetYourself, NeedBasedTask.PassOut, NeedBasedTask.Breather
+	TaskNeedBased.WetYourself, TaskNeedBased.PassOut, TaskNeedBased.Breather
 ]
 @onready var person = get_parent()
 func _ready():

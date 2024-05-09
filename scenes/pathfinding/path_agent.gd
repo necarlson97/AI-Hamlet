@@ -1,8 +1,6 @@
 extends Node3D
 
 var path: Array[Node3D] = []
-@onready var utils = get_node("/root/UtilsNode")
-@onready var pathfinder: Pathfinder = utils.get_node_by_script("pathfinder.gd")
 
 var next_waypoint: Node3D = null
 var last_waypoint: Node3D = null
@@ -23,10 +21,10 @@ func _process(delta):
 	get_parent().global_position = global_position.move_toward(next_waypoint.global_position, delta * speed)
 	
 func path_to(new_target: Node3D):
-	path = pathfinder.find_path_to_point(global_position, new_target.global_position)
+	path = $PathfinderNode.find_path_to_point(global_position, new_target.global_position)
 
 func path_to_vec(new_target_vec: Vector3):
-	path = pathfinder.find_path_to_point(global_position, new_target_vec)
+	path = $PathfinderNode.find_path_to_point(global_position, new_target_vec)
 
 func is_close_enough():
 	# Because we snap y to the island collider, we want to
@@ -36,6 +34,6 @@ func is_close_enough():
 	return my_gp.distance_to(wp_gp) < 0.1
 	
 func choose_random_destination() -> Node3D:
-	var d = pathfinder.destinations.pick_random()
+	var d = $PathfinderNode.destinations.pick_random()
 	return d
 
