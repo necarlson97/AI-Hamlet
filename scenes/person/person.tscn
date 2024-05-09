@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://n3nppds34dwx"]
 
-[ext_resource type="Script" path="res://scenes/Person.gd" id="1_200oj"]
-[ext_resource type="Script" path="res://scenes/Somatic.gd" id="1_i415x"]
-[ext_resource type="PackedScene" uid="uid://bbni2vqrsrgkl" path="res://scenes/path_agent.tscn" id="2_u41tc"]
+[ext_resource type="Script" path="res://scenes/person/person.gd" id="1_200oj"]
+[ext_resource type="Script" path="res://scenes/person/somatic.gd" id="1_i415x"]
+[ext_resource type="PackedScene" uid="uid://bbni2vqrsrgkl" path="res://scenes/pathfinding/path_agent.tscn" id="2_u41tc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dqrk"]
 

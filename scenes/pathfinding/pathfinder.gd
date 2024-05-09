@@ -44,7 +44,7 @@ func add_node(new_destination: Node3D):
 	add_child(new_pfn)
 	get_node("/root/UtilsNode").place_on_ground(new_pfn)
 	if destinations.size() > 0:
-		var closest = find_closest_node(new_pfn.global_position)
+		var closest = Utils.find_closest(new_pfn.global_position, destinations)
 		mst.append(PathEdge.new(new_pfn, closest))
 	destinations.append(new_pfn)
 
@@ -57,8 +57,8 @@ func find_path_to_point(from: Vector3, to: Vector3) -> Array[Node3D]:
 	# (can be leaf or inner node)
 	# then use those to find (and return) the path through the mst
 	# from entry -> exit
-	var entry_node = find_closest_node(from)
-	var exit_node = find_closest_node(to)
+	var entry_node = $Utils.find_closest(from, "PathfinderNode")
+	var exit_node = $Utils.find_closest(to, "PathfinderNode")
 
 	if not entry_node or not exit_node:
 		print("No entry or exit node found.")
@@ -103,13 +103,3 @@ func find_path_in_mst(start_node: PathfinderNode, end_node: PathfinderNode) -> A
 		path.push_front(step)
 		step = came_from[step]
 	return path
-
-func find_closest_node(point: Vector3) -> PathfinderNode:
-	var closest_node = null
-	var min_distance = INF
-	for node in destinations:
-		var dist = node.global_position.distance_to(point)
-		if dist < min_distance:
-			min_distance = dist
-			closest_node = node
-	return closest_node

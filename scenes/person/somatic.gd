@@ -1,6 +1,6 @@
 extends Node
 class_name Somatic
-const NeedBasedTask = preload("res://scenes/NeedBasedTask.gd")
+const NeedBasedTask = preload("res://scenes/person/task_need_based.gd")
 @onready var utils = get_node("/root/UtilsNode")
 
 # Define needs and their default values

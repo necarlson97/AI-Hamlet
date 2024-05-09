@@ -1,7 +1,7 @@
-const Task = preload("res://scenes/Task.gd").Task
-const Needs = preload("res://scenes/Somatic.gd").Needs
+const Task = preload("res://scenes/person/task.gd").Task
+const Needs = preload("res://scenes/person/somatic.gd").Needs
 
-class NeedBasedTask extends Task:
+class TaskNeedBased extends Task:
 	
 	# Thresholds  (e.g.: Needs.BATHROOM: 9)
 	# Note, they are all required

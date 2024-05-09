@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c87r8pu10kb30"]
+
+[ext_resource type="Script" path="res://scenes/buildings/bulletin.gd" id="1_clcku"]
+
+[node name="Bulletin" type="Node3D"]
+script = ExtResource("1_clcku")

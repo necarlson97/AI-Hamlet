@@ -1,18 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://babgwaga1i5n0"]
+[gd_scene load_steps=5 format=3 uid="uid://babgwaga1i5n0"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8oi0"]
-resource_name = "Material"
+[ext_resource type="Script" path="res://scenes/buildings/building.gd" id="1_u2xmi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hprdt"]
+resource_name = "moss"
 cull_mode = 2
-albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
+albedo_color = Color(0.596077, 0.619608, 0.415686, 1)
 roughness = 0.5
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_j22kv"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_rnexr"]
 _surfaces = [{
 "aabb": AABB(-2, 0, -2, 4.00001, 2.4, 4),
 "format": 34896613377,
 "index_count": 60,
 "index_data": PackedByteArray(11, 0, 6, 0, 4, 0, 11, 0, 9, 0, 6, 0, 10, 0, 6, 0, 9, 0, 10, 0, 7, 0, 6, 0, 7, 0, 4, 0, 6, 0, 7, 0, 5, 0, 4, 0, 8, 0, 3, 0, 1, 0, 8, 0, 10, 0, 3, 0, 1, 0, 2, 0, 0, 0, 1, 0, 3, 0, 2, 0, 8, 0, 0, 0, 11, 0, 8, 0, 1, 0, 0, 0, 5, 0, 11, 0, 4, 0, 5, 0, 8, 0, 11, 0, 5, 0, 10, 0, 8, 0, 5, 0, 7, 0, 10, 0, 3, 0, 9, 0, 2, 0, 3, 0, 10, 0, 9, 0, 0, 0, 9, 0, 11, 0, 0, 0, 2, 0, 9, 0),
-"name": "Material",
+"name": "moss",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 12,
@@ -20,7 +22,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_i40a3"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_qr4hw"]
 resource_name = "hamlet_Cube_001"
 _surfaces = [{
 "aabb": AABB(-2, 0, -2, 4.00001, 2.4, 4),
@@ -28,18 +30,19 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 60,
 "index_data": PackedByteArray(33, 0, 19, 0, 13, 0, 33, 0, 28, 0, 19, 0, 29, 0, 18, 0, 26, 0, 29, 0, 21, 0, 18, 0, 23, 0, 14, 0, 20, 0, 23, 0, 17, 0, 14, 0, 25, 0, 10, 0, 4, 0, 25, 0, 30, 0, 10, 0, 5, 0, 8, 0, 2, 0, 5, 0, 11, 0, 8, 0, 24, 0, 0, 0, 31, 0, 24, 0, 3, 0, 0, 0, 15, 0, 31, 0, 12, 0, 15, 0, 24, 0, 31, 0, 16, 0, 30, 0, 25, 0, 16, 0, 22, 0, 30, 0, 9, 0, 26, 0, 6, 0, 9, 0, 29, 0, 26, 0, 1, 0, 27, 0, 32, 0, 1, 0, 7, 0, 27, 0),
-"material": SubResource("StandardMaterial3D_u8oi0"),
-"name": "Material",
+"material": SubResource("StandardMaterial3D_hprdt"),
+"name": "moss",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 34,
 "vertex_data": PackedByteArray(254, 255, 170, 42, 0, 0, 255, 255, 254, 255, 170, 42, 0, 0, 170, 233, 254, 255, 170, 42, 0, 0, 84, 213, 254, 255, 0, 0, 0, 0, 255, 255, 254, 255, 0, 0, 0, 0, 255, 191, 254, 255, 0, 0, 0, 0, 84, 213, 254, 255, 170, 42, 255, 255, 255, 191, 254, 255, 170, 42, 255, 255, 170, 233, 254, 255, 170, 42, 255, 255, 84, 213, 254, 255, 0, 0, 255, 255, 255, 191, 254, 255, 0, 0, 255, 255, 255, 191, 254, 255, 0, 0, 255, 255, 84, 213, 0, 0, 170, 42, 0, 0, 255, 255, 0, 0, 170, 42, 0, 0, 170, 233, 0, 0, 170, 42, 0, 0, 84, 213, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 170, 42, 255, 255, 255, 191, 0, 0, 170, 42, 255, 255, 170, 233, 0, 0, 170, 42, 255, 255, 84, 213, 0, 0, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 255, 255, 84, 213, 255, 127, 0, 0, 0, 0, 255, 255, 255, 127, 0, 0, 0, 0, 255, 191, 255, 127, 255, 255, 255, 255, 255, 191, 255, 127, 255, 255, 255, 255, 170, 233, 255, 127, 255, 255, 255, 255, 170, 233, 255, 127, 0, 0, 255, 255, 255, 191, 255, 127, 0, 0, 255, 255, 255, 191, 255, 127, 255, 255, 0, 0, 255, 255, 255, 127, 255, 255, 0, 0, 170, 233, 255, 127, 255, 255, 0, 0, 170, 233, 255, 191, 255, 191, 4, 53, 246, 21, 170, 42, 170, 42, 255, 191, 255, 191, 0, 0, 255, 127, 170, 42, 170, 42, 255, 255, 255, 255, 4, 53, 246, 21, 170, 42, 170, 42, 255, 255, 255, 255, 0, 0, 255, 127, 170, 42, 170, 42, 255, 191, 255, 191, 9, 106, 4, 181, 84, 213, 84, 213, 255, 191, 255, 191, 0, 0, 255, 127, 84, 213, 84, 213, 255, 255, 255, 255, 9, 106, 4, 181, 84, 213, 84, 213, 255, 255, 255, 255, 0, 0, 255, 127, 84, 213, 84, 213, 255, 191, 255, 191, 0, 0, 255, 127, 255, 255, 255, 255, 4, 53, 246, 21, 9, 106, 4, 181, 255, 255, 255, 255, 0, 0, 255, 127, 255, 191, 255, 191, 4, 53, 246, 21, 9, 106, 4, 181)
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_j22kv")
+shadow_mesh = SubResource("ArrayMesh_rnexr")
 
 [node name="Building" type="Node3D"]
+script = ExtResource("1_u2xmi")
 
 [node name="tent" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_i40a3")
+mesh = SubResource("ArrayMesh_qr4hw")
 skeleton = NodePath("")

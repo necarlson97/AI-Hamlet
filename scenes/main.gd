@@ -1,20 +1,20 @@
 extends Node3D
 
-var person_prefab = preload('res://scenes/person.tscn')
-var building_prefab = preload('res://scenes/building.tscn')
+var person_prefab = preload('res://scenes/person/person.tscn')
+var building_prefab = preload('res://scenes/buildings/building.tscn')
 @onready var pathfinder = get_node('Pathfinder')
 
 func _ready():
 	get_node("TimescaleLabel").text = str(Engine.time_scale)
 	# For testing
-	for i in range(500):
+	for i in range(10):
 		var new_person = person_prefab.instantiate()
 		add_child(new_person)
 	
 	var building_count = 100
 	for i in range(building_count):
 		var spread = 2 * building_count
-		var v = Vector3(randf_range(-spread, spread), 0, randf_range(-spread, spread))
+		var v = Utils.rand_vec(spread)
 		var new = building_prefab.instantiate()
 		add_child(new)
 		new.global_position = v

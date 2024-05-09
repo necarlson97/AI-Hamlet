@@ -20,3 +20,8 @@ class Task:
 	func _to_string():
 		return "(%s) %s - %s" % [priority, get_class(), target]
 
+# TODO fucking A - deleted like an idiot
+# on_start
+# perform
+# MakeBlueprint task
+# GetItem task

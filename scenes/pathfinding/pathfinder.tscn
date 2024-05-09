@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://crsnb6t0s56gf"]
 
-[ext_resource type="Script" path="res://scenes/pathfinder.gd" id="1_e30eo"]
+[ext_resource type="Script" path="res://scenes/pathfinding/pathfinder.gd" id="1_e30eo"]
 
 [node name="Pathfinder" type="Node3D"]
 script = ExtResource("1_e30eo")

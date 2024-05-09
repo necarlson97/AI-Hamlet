@@ -75,7 +75,7 @@ Colors:
 	#FEFAE0 - cream (0.996, 0.980, 0.878)
 	#FAEDCD - canvas (0.980, 0.929, 0.804)
 	#D4A373 - buff (0.831, 0.639, 0.451)
-	#8B735B - cyote (0.545, 0.451, 0.357)
+	#8B735B - coyote (0.545, 0.451, 0.357)
 	#B6BAAE - silver (0.714, 0.729, 0.682)
 	#A1A499 - ash (0.631, 0.643, 0.600)
 	#54574D - ebony (0.329, 0.341, 0.302)
@@ -92,6 +92,4 @@ Longer term:
 		or even through like birds that fly overhead, or animals in the woods - that kind of thing
 
 Code snippets:
-, with the addition that:
-	# * Should any edges be longer than max_length,
-	# break that into a chain where the distances are each less than max_length
+

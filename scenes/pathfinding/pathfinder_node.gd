@@ -3,7 +3,7 @@ extends Node3D
 class_name  PathfinderNode
 var neighbors = []
 	
-const PathfinderNodePrefab = preload("res://scenes/pathfinder_node.tscn")
+const PathfinderNodePrefab = preload("res://scenes/pathfinding/pathfinder_node.tscn")
 static func create(pos: Node3D) -> PathfinderNode:
 	# Create a new pathfinder node
 	# (must be actualy instantiated, as godot requires that for distance calc

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bbni2vqrsrgkl"]
 
-[ext_resource type="Script" path="res://scenes/path_agent.gd" id="1_ehw1h"]
+[ext_resource type="Script" path="res://scenes/pathfinding/path_agent.gd" id="1_ehw1h"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drpc8"]
 

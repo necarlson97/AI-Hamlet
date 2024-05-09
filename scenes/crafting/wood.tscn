@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwste0awp6cht"]
+
+[ext_resource type="PackedScene" uid="uid://c235fbxvvay3b" path="res://scenes/crafting/craft_item.tscn" id="1_et6e2"]
+[ext_resource type="Script" path="res://scenes/crafting/wood.gd" id="2_uh208"]
+
+[node name="Wood" node_paths=PackedStringArray("raw") instance=ExtResource("1_et6e2")]
+script = ExtResource("2_uh208")
+raw = NodePath("log")

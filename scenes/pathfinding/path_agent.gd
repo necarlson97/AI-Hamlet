@@ -13,17 +13,20 @@ var speed = 2.0
 func _process(delta):
 	# Move toward next waypoint
 	if path == []:
-		# For now, just choose a random path for testing
-		var target = choose_random_destination()
-		path = pathfinder.find_path_to_point(global_position, target.global_position)
+		return
 
 	if next_waypoint == null or is_close_enough():
 		last_waypoint = next_waypoint
 		next_waypoint = path.pop_front()
 	if last_waypoint == null:
 		last_waypoint = self
-
 	get_parent().global_position = global_position.move_toward(next_waypoint.global_position, delta * speed)
+	
+func path_to(new_target: Node3D):
+	path = pathfinder.find_path_to_point(global_position, new_target.global_position)
+
+func path_to_vec(new_target_vec: Vector3):
+	path = pathfinder.find_path_to_point(global_position, new_target_vec)
 
 func is_close_enough():
 	# Because we snap y to the island collider, we want to
