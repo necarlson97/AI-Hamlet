@@ -9,6 +9,7 @@ static var less_than = {}
 
 func _init(_priority=2, _target=null):
 	super(_priority, _target)
+	name = "TaskNeedBased"
 	
 static func is_needed(person: Person):
 	for key in greater_than.keys():
@@ -29,6 +30,7 @@ class WetYourself extends TaskNeedBased:
 	func _init():
 		greater_than = {Needs.BATHROOM: 9}
 		super(5)
+		name = "WetYourself"
 
 	func perform(person: Node):
 		# Logic for handling emergency situation
@@ -48,6 +50,7 @@ class PassOut extends TaskNeedBased:
 	func _init():
 		greater_than = {Needs.SLEEPINESS: 9}
 		super(5)
+		name = "PassOut"
 
 	func perform(person: Node):
 		# Logic for handling emergency situation
@@ -66,6 +69,7 @@ class Breather extends TaskNeedBased:
 	func _init():
 		greater_than = {Needs.FATIGUE: 9}
 		super(5)
+		name = "Breather"
 
 	func perform(person: Node):
 		# Logic for handling emergency situation

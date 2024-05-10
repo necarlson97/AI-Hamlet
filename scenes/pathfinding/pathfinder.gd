@@ -39,12 +39,24 @@ var mst = []
 func edge_sort(a, b):
 	return a.get_cost() < b.get_cost()
 
-func add_node(new_destination: Node3D):
-	var new_pn = PathNode.create(new_destination)
+	
+const PathNodePrefab = preload("res://scenes/pathfinding/path_node.tscn")
+func create_node(pos: Vector3) -> PathNode:
+	# Create new node, but don't yet add it to list of destinations
+	# (e.g., a person visiting a tree)
+	# TODO when do we free?
+	var new_pn = PathNodePrefab.instantiate()
 	add_child(new_pn)
+	new_pn.global_position = pos
 	$"/root/UtilsNode".place_on_ground(new_pn)
+	new_pn.name = "New Temp PN"
+	return new_pn
+	
+func add_node(new_destination: Node3D):
+	var new_pn = create_node(new_destination.global_position)
+	new_pn.name = ("Dest %s" % new_destination.name.substr(0, 10))
 	if destinations.size() > 0:
-		var closest = Utils.find_closest(new_pn.global_position, destinations)
+		var closest = Utils.find_closest_in_array(new_pn.global_position, destinations)
 		mst.append(PathEdge.new(new_pn, closest))
 	destinations.append(new_pn)
 
@@ -57,8 +69,8 @@ func find_path_to_point(from: Vector3, to: Vector3) -> Array[Node3D]:
 	# (can be leaf or inner node)
 	# then use those to find (and return) the path through the mst
 	# from entry -> exit
-	var entry_node = $Utils.find_closest(from, "PathNode")
-	var exit_node = $Utils.find_closest(to, "PathNode")
+	var entry_node = $"/root/UtilsNode".find_closest_to(from, PathNode)
+	var exit_node = $"/root/UtilsNode".find_closest_to(to, PathNode)
 
 	if not entry_node or not exit_node:
 		print("No entry or exit node found.")
@@ -101,5 +113,5 @@ func find_path_in_mst(start_node: PathNode, end_node: PathNode) -> Array[Node3D]
 	var step = end_node
 	while step != null:
 		path.push_front(step)
-		step = came_from[step]
+		step = came_from.get(step)
 	return path

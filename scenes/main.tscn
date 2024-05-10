@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2v44o4ptru"]
+[gd_scene load_steps=6 format=3 uid="uid://c2v44o4ptru"]
 
 [ext_resource type="PackedScene" uid="uid://w85ps3kir0ll" path="res://scenes/island/island.tscn" id="1_5gj7v"]
 [ext_resource type="PackedScene" uid="uid://bj6h33drht5ew" path="res://scenes/camera.tscn" id="1_eugi5"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_h3e42"]
-[ext_resource type="PackedScene" uid="uid://n3nppds34dwx" path="res://scenes/person/person.tscn" id="1_msnqa"]
 [ext_resource type="PackedScene" uid="uid://cfisd4tftasrh" path="res://scenes/sun.tscn" id="2_y8t1k"]
 [ext_resource type="PackedScene" uid="uid://c87r8pu10kb30" path="res://scenes/buildings/bulletin.tscn" id="6_vjknn"]
 
@@ -19,7 +18,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -393.193, 0, 217.645)
 
 [node name="Sun" parent="." instance=ExtResource("2_y8t1k")]
 
-[node name="Person" parent="." instance=ExtResource("1_msnqa")]
+[node name="Bulletin" parent="." instance=ExtResource("6_vjknn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06911, -13.631)
 
 [node name="FPSLabel" type="Label" parent="."]
 offset_right = 40.0
@@ -41,8 +41,5 @@ offset_bottom = 56.0
 max_value = 10.0
 step = 0.1
 tick_count = 11
-
-[node name="Bulletin" parent="." instance=ExtResource("6_vjknn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06911, -13.631)
 
 [connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]

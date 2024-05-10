@@ -6,11 +6,12 @@ var building_prefab = preload('res://scenes/buildings/building.tscn')
 func _ready():
 	get_node("TimescaleLabel").text = str(Engine.time_scale)
 	# For testing
-	for i in range(10):
+	var person_count = 1
+	for i in range(person_count):
 		var new_person = person_prefab.instantiate()
 		add_child(new_person)
 	
-	var building_count = 100
+	var building_count = 0
 	for i in range(building_count):
 		var spread = 2 * building_count
 		var v = Utils.rand_vec(spread)

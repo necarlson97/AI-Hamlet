@@ -41,13 +41,21 @@ shadow_mesh = SubResource("ArrayMesh_jowg4")
 [node name="Person" type="Node3D"]
 script = ExtResource("1_jlq00")
 
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80881, 0)
+text = "Task info
+- task
+ - task
+Other stuff"
+vertical_alignment = 2
+
 [node name="PathAgent" parent="." instance=ExtResource("2_u41tc")]
 
 [node name="Somatic" type="Node3D" parent="."]
 script = ExtResource("3_itrk2")
 
 [node name="Label3D" type="Label3D" parent="Somatic"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74118, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.984393, 0.913727, 0)
 text = "hunger: 0
 sleepiness: 0
 fatigue: 0

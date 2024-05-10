@@ -2,6 +2,7 @@ class_name Task
 
 var priority : int
 var target = null  # Can be used to specify a resource or location
+var name = "AbstractTask" # Hate that I can't shadow vars - set in init of child
 
 # highest priority is, for now, 5
 # 5 = running from danger, pissing yourself, stealing food to survive, etc
@@ -21,13 +22,17 @@ func start(person: Person):
 	
 	# path to the vecor/node target, if we have one
 	if target == null:
-		pass
-	elif target.is_class("Vector"):
-		person.get_node("PathAgent").path_to_vec(target)
-	elif target.is_class("Node3D"):
-		person.get_node("PathAgent").path_to(target)
+		return
+	print("Getting target vec %s %s"%[get_target_vec(), self])
+	person.get_node("PathAgent").path_to_vec(get_target_vec())
+
+func get_target_vec() -> Vector3:
+	# Return the vector3 from the target
+	if target is Vector3: return target
+	elif target is Node3D: return target.global_position
 	else:
-		assert(false, "How to path to %s (%s)?"%[target, typeof(target)])
+		assert(false, "How do I get pos of %s (%s)?"%[target, typeof(target)])
+		return Vector3(0, 0, 0)
 
 func on_start(person: Person):
 	# Subclass shadows if there is any logic needed on start
@@ -46,10 +51,10 @@ func on_perform(person: Person) -> bool:
 func has_arrived(person: Person) -> bool:
 	if target == null:
 		return true
-	return person.global_position.distance_to(target) < 1.0
+	return person.global_position.distance_to(get_target_vec()) < 1.0
 	
 func _to_string():
-	return "(%s) %s - %s" % [priority, get_class(), target]
+	return "(%s) %s - %s" % [priority, name, get_target_vec().round()]
 
 class GetItem extends Task:
 	# Find the closest unclamed X and put it in person's inventory
@@ -58,6 +63,7 @@ class GetItem extends Task:
 	func _init(_priority=4, _item_name="Wood"):
 		super(_priority)
 		item_name = _item_name
+		name = "GetItem"
 		
 	func on_start(person: Person):
 		target = Utils.find_closest_to_person(person, item_name)
@@ -68,16 +74,18 @@ class GetItem extends Task:
 		
 class MakeBlueprint extends Task:
 	# Go to a target vec, and start a building there
-	var building
+	var building_prefab
 	
 	func _init(_priority=2, _target=Vector3(0, 0, 0), _building_name="outhouse"):
 		super(_priority, _target)
-		var building  = load("res://scenes/buildings/%s.gd"%_building_name)
+		building_prefab  = load("res://scenes/buildings/%s.tscn"%_building_name)
+		name = "MakeBlueprint"
+		print("Make blueprint going to %s"%target)
 		
 	func on_perform(person: Person) -> bool:
-		var new_building = building.instantiate()
+		var new_building = building_prefab.instantiate()
 		person.get_tree().root.add_child(new_building)
-		building.global_position = person.global_position
+		new_building.global_position = person.global_position
 		
 		# Adds tasks to finish the building
 		return true
@@ -91,6 +99,7 @@ class VisitBoard extends Task:
 	
 	func _init(_priority=0):
 		super(_priority)
+		name = "VisitBoard"
 	
 	func on_start(person: Person):
 		target = Utils.find_closest_to_person(person, Bulletin)

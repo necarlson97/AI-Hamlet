@@ -1,6 +1,5 @@
 extends Node
 class_name Somatic
-@onready var utils = get_node("/root/UtilsNode")
 
 # Define needs and their default values
 enum Needs {
@@ -64,9 +63,7 @@ func check_need_tasks():
 	for task_type in need_tasks:
 		if task_type.is_needed(person):
 			var task = task_type.new()
-			print("Do we have %s" % task)
 			if not person.has_task(task.get_class()):
-				print("Added %s" % task)
 				person.add_task(task)
 				
 func adjust(adjustments):
@@ -75,15 +72,14 @@ func adjust(adjustments):
 		needs[need] += adjustments[need]
 		needs[need] = clamp(needs[need], 0, 10)
 
-@onready var label = get_node("Label3D")
 func update_label():
 	if not Utils.debug:
-		label.visible = false
+		$Label3D.visible = false
 		return
 	
-	label.visible = true
+	$Label3D.visible = true
 	var text = ""
 	for need in needs.keys():
 		var value = needs[need]
 		text += "%s: %.1f\n" % [Utils.enum_name(Needs, need), value]
-	label.text = text
+	$Label3D.text = text

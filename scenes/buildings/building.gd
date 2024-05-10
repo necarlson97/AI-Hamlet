@@ -1,4 +1,5 @@
 extends Node3D
+class_name Building
 
 # TODO enum from resources
 var costs = {
@@ -12,6 +13,10 @@ var construction = 10
 # to have a seperate 'Blueprint' which just looks like the building,
 # has no functionality, but can get replaced?
 var completed = false
+
+func _ready():
+	# All buildings are visitalbe
+	$"/root/PathfinderNode".add_node(self)
 
 func get_build_task():
 	# If not yet built, get a task to continue building it
