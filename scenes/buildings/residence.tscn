@@ -1,18 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpoeluffu1nat"]
+[gd_scene load_steps=3 format=3 uid="uid://cpoeluffu1nat"]
 
 [ext_resource type="PackedScene" uid="uid://babgwaga1i5n0" path="res://scenes/buildings/building.tscn" id="1_rl2ux"]
 [ext_resource type="Script" path="res://scenes/buildings/residence.gd" id="2_cnyef"]
-[ext_resource type="Shader" path="res://scenes/buildings/construction.gdshader" id="3_ont6j"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qx26a"]
-render_priority = 0
-shader = ExtResource("3_ont6j")
-shader_parameter/ratio = 1.0
-shader_parameter/pulse_speed = 3.0
-shader_parameter/base_color = Color(0.607843, 0.627451, 0.431373, 1)
 
 [node name="Residence" instance=ExtResource("1_rl2ux")]
 script = ExtResource("2_cnyef")
-
-[node name="tent" parent="." index="0"]
-surface_material_override/0 = SubResource("ShaderMaterial_qx26a")

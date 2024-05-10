@@ -23,7 +23,6 @@ func path_to_vec(new_target_vec: Vector3):
 	# Make a non-moving final node to go to
 	# TODO don't need this if the end goal is a building itself, but whatevs
 	path.append($"/root/PathfinderNode".create_node(new_target_vec))
-	print("Pathing to %s"%new_target_vec)
 
 func is_close_enough():
 	# Because we snap y to the island collider, we want to

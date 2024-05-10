@@ -39,13 +39,22 @@ func pick_up(to_hold: Node3D) -> bool:
 	# TODO are there situations where we can't drop?
 	return true
 	
-func drop():
-	for c in $Held.get_children():
-		# TODO I think remove_child is not needed
-		$Held.remove_child(c)
-		# TODO is there, like, a 'dropped' parent node?
-		get_tree().root.add_child(c)
-
+func drop() -> Node3D:
+	var held = get_held()
+	if held == null: return null
+	# TODO I think remove_child is not needed
+	$Held.remove_child(held)
+	# TODO is there, like, a parent node for dropped stuff?
+	get_tree().root.add_child(held)
+	return held
+	
+func get_held() -> Node3D:
+	# For now, we are going to limit inventory to 1 to simplify
+	if $Held.get_children() == []:
+		return null
+	assert($Held.get_children().size() == 1)
+	return $Held.get_children()[0]
+	
 func add_task(task: Task):
 	task_queue.add(task)
 

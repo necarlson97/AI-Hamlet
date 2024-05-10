@@ -126,3 +126,7 @@ static func rand_vec(spread=50.0, y_scale=0) -> Vector3:
 		randf_range(-spread, spread) * y_scale,
 		randf_range(-spread, spread)
 	)
+
+static func sum(arr: Array):
+	if arr == []: return 0
+	return arr.reduce(func(accum, number): return accum + number)

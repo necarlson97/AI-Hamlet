@@ -80,7 +80,6 @@ class MakeBlueprint extends Task:
 		super(_priority, _target)
 		building_prefab  = load("res://scenes/buildings/%s.tscn"%_building_name)
 		name = "MakeBlueprint"
-		print("Make blueprint going to %s"%target)
 		
 	func on_perform(person: Person) -> bool:
 		var new_building = building_prefab.instantiate()
@@ -89,7 +88,28 @@ class MakeBlueprint extends Task:
 		
 		# Adds tasks to finish the building
 		return true
+
+class BringItemTo extends Task:
+	# Find the closest unclamed X and put it in person's inventory
+	var item_name: String
 	
+	func _init(_priority=2, _target=null, _item_name="Wood"):
+		super(_priority)
+		item_name = _item_name
+		name = "BringItemTo"
+		
+	func on_perform(person: Person) -> bool:
+		# If you don't have the item, get one
+		# TODO technically only called when you arrive at task,
+		# maybe we should have a 'on_check' or something
+		# that always runs, so we don't have to wait until we get there 
+		# to figure out we gotta leave again
+		if not person.is_holding(item_name):
+			# Is there a way we can gaurentee we wont get caught in a loop?
+			person.add_task(GetItem.new(priority + 2, item_name))
+			return false
+		return target.perform_build_step(person, person.get_held())
+
 class VisitBoard extends Task:
 	# Person needs a task - go to the closest bulliten board, and get a task
 	# there

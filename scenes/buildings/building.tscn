@@ -43,6 +43,6 @@ shadow_mesh = SubResource("ArrayMesh_rnexr")
 [node name="Building" type="Node3D"]
 script = ExtResource("1_u2xmi")
 
-[node name="tent" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_qr4hw")
 skeleton = NodePath("")
