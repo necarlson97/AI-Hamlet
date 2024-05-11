@@ -23,15 +23,15 @@ func start(person: Person):
 	# path to the vecor/node target, if we have one
 	if target == null:
 		return
-	print("Getting target vec %s %s"%[get_target_vec(), self])
 	person.get_node("PathAgent").path_to_vec(get_target_vec())
 
 func get_target_vec() -> Vector3:
 	# Return the vector3 from the target
-	if target is Vector3: return target
+	if target == null: return Vector3()
+	elif target is Vector3: return target
 	elif target is Node3D: return target.global_position
 	else:
-		assert(false, "How do I get pos of %s (%s)?"%[target, typeof(target)])
+		assert(false, "How do I get pos of %s %s (%s)?"%[name, target, typeof(target)])
 		return Vector3(0, 0, 0)
 
 func on_start(person: Person):
@@ -48,10 +48,10 @@ func on_perform(person: Person) -> bool:
 	# Subclass shadows to perform the task
 	return true
 	
-func has_arrived(person: Person) -> bool:
+func has_arrived(person: Person, threshold=3.0) -> bool:
 	if target == null:
 		return true
-	return person.global_position.distance_to(get_target_vec()) < 1.0
+	return person.global_position.distance_to(get_target_vec()) < threshold
 	
 func _to_string():
 	return "(%s) %s - %s" % [priority, name, get_target_vec().round()]
@@ -67,6 +67,7 @@ class GetItem extends Task:
 		
 	func on_start(person: Person):
 		target = Utils.find_closest_to_person(person, item_name)
+		assert(target, "Unable to find target item %s"%item_name)
 		
 	func on_perform(person: Person) -> bool:
 		# TODO Pick it up!
@@ -78,7 +79,9 @@ class MakeBlueprint extends Task:
 	
 	func _init(_priority=2, _target=Vector3(0, 0, 0), _building_name="outhouse"):
 		super(_priority, _target)
-		building_prefab  = load("res://scenes/buildings/%s.tscn"%_building_name)
+		var building_path = "res://scenes/buildings/%s.tscn"%_building_name
+		building_prefab  = load(building_path)
+		assert(building_prefab, "Unable to load %s (%s)"%[_building_name, building_path])
 		name = "MakeBlueprint"
 		
 	func on_perform(person: Person) -> bool:
@@ -90,7 +93,8 @@ class MakeBlueprint extends Task:
 		return true
 
 class BringItemTo extends Task:
-	# Find the closest unclamed X and put it in person's inventory
+	# Put x in the person's inventory, and bring it to construction site,
+	# storage, etc
 	var item_name: String
 	
 	func _init(_priority=2, _target=null, _item_name="Wood"):
@@ -108,7 +112,7 @@ class BringItemTo extends Task:
 			# Is there a way we can gaurentee we wont get caught in a loop?
 			person.add_task(GetItem.new(priority + 2, item_name))
 			return false
-		return target.perform_build_step(person, person.get_held())
+		return target.add_item(person, person.get_held())
 
 class VisitBoard extends Task:
 	# Person needs a task - go to the closest bulliten board, and get a task

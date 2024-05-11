@@ -10,17 +10,19 @@ class_name Bulletin
 
 var task_queue = PriorityQueue.new()
 
+# For now, just have a list of things we tell them to build
+var to_build = [
+	"tent",
+	"wood_lot",
+	"outhouse",
+]
 func _ready():
 	super._ready()
-	task_queue.add(random_build_request())
+	# Create some tasks for what we want to build
+	for build_name in to_build:
+		var rand_placement = $"/root/UtilsNode".rand_ground_vec()
+		task_queue.add(Task.MakeBlueprint.new(2, rand_placement, build_name))
+	
 
 func get_request() -> Task:
-	# TODO normally, we will have a priority queue, but for now,
-	# just make a random build order
-	task_queue.add(random_build_request())
 	return task_queue.next()
-	
-func random_build_request() -> Task:
-	# TODO add a task to build something at a random location
-	var rand_placement = $"/root/UtilsNode".get_ground_vec(Utils.rand_vec())
-	return Task.MakeBlueprint.new(2, rand_placement)

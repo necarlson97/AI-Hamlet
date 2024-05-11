@@ -27,7 +27,7 @@ func test_network():
 	# For testing purposes
 	for child in get_children():
 		if "Destination" in child.name:
-			destinations.append(add_node(child))
+			destinations.append(create_node_at(child))
 			
 
 func _process(delta):
@@ -52,9 +52,15 @@ func create_node(pos: Vector3) -> PathNode:
 	new_pn.name = "New Temp PN"
 	return new_pn
 	
-func add_node(new_destination: Node3D):
+func create_node_at(new_destination: Node3D):
+	# Create a new node, and attach it to a building or w/e
 	var new_pn = create_node(new_destination.global_position)
 	new_pn.name = ("Dest %s" % new_destination.name.substr(0, 10))
+	new_pn.reparent(new_destination)
+	connect_node(new_pn)
+
+func connect_node(new_pn: PathNode):
+	# Connect an existing node to the network
 	if destinations.size() > 0:
 		var closest = Utils.find_closest_in_array(new_pn.global_position, destinations)
 		mst.append(PathEdge.new(new_pn, closest))

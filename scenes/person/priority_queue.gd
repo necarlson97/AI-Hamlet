@@ -3,18 +3,21 @@ class_name PriorityQueue
 
 var tasks = []
 
-func add(task : Task):
+func add(task: Task):
+	if task == null: return
 	var position = 0
 	for existing_task in tasks:
-		if existing_task.priority < task.priority:
+		if existing_task.priority > task.priority:
 			position += 1
 		else:
 			break
 	tasks.insert(position, task)
+	print("Inserted %s at %s"%[task, position])
+	print(tasks)
 
 func next():
 	if tasks.size() > 0:
-		return tasks.pop_front()
+		return tasks.pop_back()
 	return null
 	
 func peek():

@@ -62,6 +62,12 @@ Buildings:
 			2. foundry
 			3. forge
 			
+		Oh! Also need storange rooms. Maybe for now just:
+			x_lot
+			x_shed
+			x_yard
+			x_warehouse
+			
 Everyone needs '1' food a day. Food can be gotten from:
 	* fishing = 4 meals
 	* gathering fruit = 6 meals

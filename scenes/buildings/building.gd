@@ -16,7 +16,7 @@ var completed = false
 var blueprint_prefab = preload("res://scenes/buildings/blueprint.tscn")
 func _ready():
 	# All buildings are visitalbe
-	$"/root/PathfinderNode".add_node(self)
+	var new_pn = $"/root/PathfinderNode".create_node_at(self)
 	create_blueprint()
 	
 func create_blueprint():
@@ -30,7 +30,7 @@ func get_build_task():
 	# TODO
 	pass
 
-func perform_build_step(person: Person, item: CraftItem):
+func add_item(person: Person, item: CraftItem):
 	if $Blueprint:
 		# If we are done building
 		if $Blueprint.perform_build_step(person, item):

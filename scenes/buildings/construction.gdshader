@@ -11,7 +11,7 @@ void fragment() {
     float threshold = ratio;
     
     // Use world_position to determine the height percentile
-    float height_percentile = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).y / height;
+    float height_percentile = (inverse(MODEL_MATRIX) * INV_VIEW_MATRIX  * vec4(VERTEX, 1.0)).y / height;
 	
 	// pulse the edges and insides
 	float pulse = (1.0 + sin(TIME * pulse_speed))/2.0;

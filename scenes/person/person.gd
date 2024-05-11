@@ -54,9 +54,17 @@ func get_held() -> Node3D:
 		return null
 	assert($Held.get_children().size() == 1)
 	return $Held.get_children()[0]
-	
+
+func is_holding(item_name) -> bool:
+	return get_held() and get_held().is_class(item_name)
+
 func add_task(task: Task):
 	task_queue.add(task)
+	# If this new task just became the most important, we need to
+	# start it immediatly
+	# TODO not sure if this is the best place to handle this
+	if task_queue.tasks[0] == task:
+		task.start(self)
 
 func has_task(task_type_name: String) -> bool:
 	return task_queue.has_task(task_type_name)

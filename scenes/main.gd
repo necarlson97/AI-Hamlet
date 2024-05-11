@@ -23,7 +23,6 @@ func _ready():
 		var new = building_prefab.instantiate()
 		add_child(new)
 		new.global_position = v
-		$"/root/PathfinderNode".add_node(new)
 		$"/root/UtilsNode".place_on_ground(new)
 		
 func _input(event):

@@ -130,3 +130,12 @@ static func rand_vec(spread=50.0, y_scale=0) -> Vector3:
 static func sum(arr: Array):
 	if arr == []: return 0
 	return arr.reduce(func(accum, number): return accum + number)
+	
+func rand_ground_vec(spread=50.0, min_y=1.0) -> Vector3:
+	# Get a random vector that is an actual spot on the islands ground,
+	# and not below the min_y (usually just not below water at 0)
+	while true:
+		var v = get_ground_vec(Utils.rand_vec(spread))
+		if v.y > min_y: return v
+	assert(false, "Why were we unable to get ground vec? %s %s"%[spread, min_y])
+	return Vector3(0, 0, 0)

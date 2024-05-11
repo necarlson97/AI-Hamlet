@@ -5,7 +5,7 @@
 [sub_resource type="PrismMesh" id="PrismMesh_u4p4k"]
 size = Vector3(1, 2, 1)
 
-[node name="PathfinderNode" type="Node3D"]
+[node name="PathNode" type="Node3D"]
 script = ExtResource("1_ug82e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
