@@ -9,6 +9,24 @@ func _ready():
 	var parent_color = parent_mat.albedo_color
 	$MeshInstance3D.get_active_material(0).set_shader_parameter("base_color", parent_color)
 	update_buld_progress()
+	assign_build_tasks()
+
+func assign_build_tasks():
+	# Post to the bulliten the tasks that are needed to complete the building
+	var bulletin = $"/root/UtilsNode".get_matching_node(Bulletin, true)
+	if not bulletin:
+		print("No bulletin found, so not assigning build tasks")
+		return
+
+	var par = get_parent()
+	# Taks to get items
+	for item_name in par.items_needed:
+		var item_count = par.items_needed[item_name]
+		for i in range(item_count):
+			bulletin.add_task(Task.BringItemTo.new(2, par, item_name))
+	# Tasks to do labor
+	for i in range(par.labor_needed):
+		bulletin.add_task(Task.ConstructionLabor.new(2, par))
 
 
 func perform_build_step(person: Person, item: CraftItem):
@@ -22,11 +40,15 @@ func perform_build_step(person: Person, item: CraftItem):
 	# Return true if we are done
 	return get_progress() >= 1.0
 
+func items_needed_count():
+	return Utils.sum(get_parent().items_needed.values())
+func items_added_count():
+	return Utils.sum(items_added.values())
+
 func get_progress() -> float:
 	# Get progress from 0-1
-	var par = get_parent()
-	var item_progress = Utils.sum(items_added.values()) / Utils.sum(par.items_needed.values())
-	var labor_progress = labor_done / par.labor_needed
+	var item_progress = float(items_added_count()) / items_needed_count()
+	var labor_progress = labor_done / get_parent().labor_needed
 	
 	return clampf((item_progress + labor_progress) * 0.5, 0, 1)
 

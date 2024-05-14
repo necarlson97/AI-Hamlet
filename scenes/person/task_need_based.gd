@@ -32,7 +32,7 @@ class WetYourself extends TaskNeedBased:
 		super(5)
 		name = "WetYourself"
 
-	func perform(person: Node):
+	func on_perform(person: Node):
 		# Logic for handling emergency situation
 		print("Emergency! No outhouse found in time for: ", person.name)
 		
@@ -52,7 +52,7 @@ class PassOut extends TaskNeedBased:
 		super(5)
 		name = "PassOut"
 
-	func perform(person: Node):
+	func on_perform(person: Node):
 		# Logic for handling emergency situation
 		print("Emergency! No bed found in time for: ", person.name)
 		
@@ -71,7 +71,7 @@ class Breather extends TaskNeedBased:
 		super(5)
 		name = "Breather"
 
-	func perform(person: Node):
+	func on_perform(person: Node):
 		# Logic for handling emergency situation
 		print("Emergency! Need to take a rest: ", person.name)
 		

@@ -1,4 +1,5 @@
 extends Bathroom
+class_name Outhouse
 
 func _ready():
 	super._ready()

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2er07q26220g"]
+
+[ext_resource type="Script" path="res://scenes/unit_test.gd" id="1_ys8gq"]
+[ext_resource type="PackedScene" uid="uid://cfisd4tftasrh" path="res://scenes/sun.tscn" id="2_kfbwr"]
+
+[node name="UnitTest" type="Node3D"]
+script = ExtResource("1_ys8gq")
+
+[node name="Sun" parent="." instance=ExtResource("2_kfbwr")]

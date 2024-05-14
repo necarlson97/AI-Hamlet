@@ -1,2 +1,2 @@
-extends "res://scenes/crafting/craft_item.gd"
+extends CraftItem
 class_name Wood

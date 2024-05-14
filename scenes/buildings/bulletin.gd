@@ -23,6 +23,11 @@ func _ready():
 		var rand_placement = $"/root/UtilsNode".rand_ground_vec()
 		task_queue.add(Task.MakeBlueprint.new(2, rand_placement, build_name))
 	
+func add_task(task: Task):
+	# TODO could make task queue static, then make this func static
+	# Tasks are then shared among all bullitens, and it reduces having to
+	# find the closest and whatnot
+	task_queue.add(task)
 
 func get_request() -> Task:
 	return task_queue.next()

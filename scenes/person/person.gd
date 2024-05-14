@@ -15,27 +15,30 @@ func _ready():
 func _process(delta):
 	# TODO is this the best way to structure this?
 	if task_queue.peek():
-		check_task_progress()
+		check_task_progress(delta)
 	else:
 		# Go to the nearest place to get new tasks
 		task_queue.add(Task.VisitBoard.new())
 		task_queue.peek().start(self)
 	update_label()
 
-func check_task_progress():
+func check_task_progress(delta):
 	# If we are where we need to be...
-	if task_queue.peek().has_arrived(self):
-		# Try to do the thing...
-		if task_queue.peek().perform(self):
-			# Done!
-			task_queue.next()
-			if task_queue.peek():
-				task_queue.peek().start(self)
+	var current_task = task_queue.peek()
+	if current_task.perform(delta, self):
+		# Done!
+		print("Tasks:")
+		print(task_queue.tasks)
+		# We need to make sure we remove the completed task,
+		# as we might've added new tasks infront of this one
+		task_queue.remove(current_task)
+		if task_queue.peek():
+			task_queue.peek().start(self)
 
 func pick_up(to_hold: Node3D) -> bool:
 	# Drop anything we are holding
 	drop()
-	$Held.add_child(to_hold)
+	Utils.set_parent(to_hold, $Held)
 	# TODO are there situations where we can't drop?
 	return true
 	
@@ -56,7 +59,7 @@ func get_held() -> Node3D:
 	return $Held.get_children()[0]
 
 func is_holding(item_name) -> bool:
-	return get_held() and get_held().is_class(item_name)
+	return get_held() and Utils.matches_class(get_held(), item_name)
 
 func add_task(task: Task):
 	task_queue.add(task)
@@ -84,6 +87,7 @@ func update_label():
 	
 	$Label3D.visible = true
 	var text = ""
+	text += "Held: %s\n" % get_held()
 	text += "Pos: %s\n" % global_position.round()
 	text += "Path: %s\n" % $PathAgent.path.size()
 	for p in $PathAgent.path:

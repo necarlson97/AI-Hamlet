@@ -9,10 +9,7 @@ static func find_closest_to_person(person: Person, script, max_range=100.0):
 	# TODO dumb that this is duplicated - but either static using 'person' root,
 	# or not static using autoload $"/root/UtilsNode" root
 	var all = []
-	if script is String:
-		all = static_get_nodes_by_script_name(person.get_tree().root, script)
-	else:
-		all = static_get_nodes_by_script(person.get_tree().root, script)
+	all = static_get_matching_nodes(person.get_tree().root, script, true)
 	var closest = find_closest_in_array(person.global_position, all)
 	
 	if closest == null: return null
@@ -22,7 +19,7 @@ static func find_closest_to_person(person: Person, script, max_range=100.0):
 func find_closest_to(pos: Vector3, script, max_range=100.0):
 	# Find the closest X script to the given person (limit range)
 	# TODO clever caching?
-	var all = Utils.static_get_nodes_by_script(get_tree().root, script)
+	var all = Utils.static_get_matching_nodes(get_tree().root, script)
 	var closest = Utils.find_closest_in_array(pos, all)
 	
 	if closest == null: return null
@@ -42,55 +39,31 @@ static func find_closest_in_array(point: Vector3, arr: Array):
 			closest_node = node
 	return closest_node
 
-# Functions for finding by script type
-func get_nodes_by_script(script: Script) -> Array:
-	# Take a string of the filename, such as pathfinder.gd
-	var res = Utils.static_get_nodes_by_script(get_tree().root, script)
-	assert(res != [], "Could not find any %s"%script)
+# Functions for finding by script or class name (see 'matches_class')
+func get_matching_node(script, allow_null=false):
+	return Utils.static_get_matching_node(get_tree().root, script, allow_null)
+func get_matching_nodes(script, allow_empty=false) -> Array:
+	return Utils.static_get_matching_nodes(get_tree().root, script, allow_empty)
+static func static_get_matching_node(node: Node, script, allow_null=false):
+	var res = Utils._static_get_matching_node(node, script)
+	assert(res != null or allow_null, "Could not find a %s (%s) = %s"%[script, node, res])
 	return res
-func get_node_by_script(script: Script):
-	var res = Utils.static_get_node_by_script(get_tree().root, script)
-	assert(res != null, "Could not find a %s"%script)
+static func static_get_matching_nodes(node: Node, script, allow_empty=false) -> Array:
+	var res = Utils._static_get_matching_nodes(node, script)
+	assert(res != [] or allow_empty, "Could not find a %s (%s)"%[script, node])
 	return res
-static func static_get_nodes_by_script(node: Node, script: Script) -> Array:
-	if is_instance_of(node, script):
-		return [node]
-	var res = []
+static func _static_get_matching_node(node: Node, script):
+	if Utils.matches_class(node, script): return node
 	for child in node.get_children():
-		res += Utils.static_get_nodes_by_script(child, script)
-	return res
-static func static_get_node_by_script(node: Node, script: Script):
-	if is_instance_of(node, script):
-		return node
-	for child in node.get_children():
-		var res = Utils.static_get_node_by_script(child, script)
+		var res = Utils._static_get_matching_node(child, script)
 		if res != null: return res
 	return null
-
-# Functions for finding by script name
-func get_nodes_by_script_name(script_name: String) -> Array:
-	# Take a string of the filename, such as pathfinder.gd
-	var res = Utils.static_get_nodes_by_script_name(get_tree().root, script_name)
-	assert(res != [], "Could not find any %s"%script_name)
-	return res
-func get_node_by_script_name(script_name: String):
-	var res = Utils.static_get_node_by_script_name(get_tree().root, script_name)
-	assert(res != null, "Could not find a %s"%script_name)
-	return res
-static func static_get_nodes_by_script_name(node: Node, script_name: String) -> Array:
-	if node.get_script() and script_name in node.get_script().get_path():
-		return [node]
+static func _static_get_matching_nodes(node: Node, script) -> Array:
+	if Utils.matches_class(node, script): return [node]
 	var res = []
 	for child in node.get_children():
-		res += Utils.static_get_nodes_by_script_name(child, script_name)
+		res += Utils._static_get_matching_nodes(child, script)
 	return res
-static func static_get_node_by_script_name(node: Node, script_name: String):
-	if node.get_script() and script_name in node.get_script().get_path():
-		return node
-	for child in node.get_children():
-		var res = Utils.static_get_node_by_script_name(child, script_name)
-		if res != null: return res
-	return null
 
 static func get_subclasses(sub_name: String):
 	# Gets all subclasses of a given class name
@@ -131,7 +104,7 @@ static func sum(arr: Array):
 	if arr == []: return 0
 	return arr.reduce(func(accum, number): return accum + number)
 	
-func rand_ground_vec(spread=50.0, min_y=1.0) -> Vector3:
+func rand_ground_vec(spread=30.0, min_y=1.0) -> Vector3:
 	# Get a random vector that is an actual spot on the islands ground,
 	# and not below the min_y (usually just not below water at 0)
 	while true:
@@ -139,3 +112,33 @@ func rand_ground_vec(spread=50.0, min_y=1.0) -> Vector3:
 		if v.y > min_y: return v
 	assert(false, "Why were we unable to get ground vec? %s %s"%[spread, min_y])
 	return Vector3(0, 0, 0)
+
+static func matches_class(obj, klass) -> bool:
+	# A more permissive version of is class that checks:
+	# * If obj is of the class (exact or subclass)
+	# * If obj matches the class_name (e.g., a string was passed in)
+	# * If obj is a node that has a script with the class
+	# * If obj is a node that has a script with the class_name
+	if klass is String: return matches_class_name(obj, klass)
+	else: return matches_class_type(obj, klass)
+
+static func matches_class_name(obj, klass: String) -> bool:
+	# Check if the object itself matches the class or any subclass
+	if obj.is_class(klass): return true
+	# Traverse through attached script and its base scripts
+	var script = obj.get_script()
+	while script:
+		if klass.to_snake_case() in script.get_path(): return true
+		script = script.get_base_script()
+	return false
+	
+static func matches_class_type(obj, klass):
+	# Check if the object is an instance of the class or inherits from it
+	return is_instance_of(obj, klass)
+	
+static func set_parent(node, parent, reset_pos=true):
+	# Like add_child or reparent, but don't care if it had a parent before
+	if node.get_parent(): node.reparent(parent)
+	else: parent.add_child(node)
+	# Normally, we want to set the position to parent
+	if reset_pos: node.position = Vector3(0, 0, 0)

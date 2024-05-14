@@ -1,4 +1,5 @@
-extends "res://scenes/buildings/building.gd"
+extends Building
+class_name Residence
 const Needs = Somatic.Needs
 
 var occupants = 1

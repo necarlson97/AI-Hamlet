@@ -70,3 +70,4 @@ mesh = SubResource("ArrayMesh_wb5vj")
 skeleton = NodePath("")
 
 [node name="Held" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.661523, 0.570546)

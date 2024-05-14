@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://yevx2bvoelw1"]
 
-[ext_resource type="Script" path="res://scenes/island/trees/tree.gd" id="1_k8u28"]
+[ext_resource type="Script" path="res://scenes/island/trees/arbor.gd" id="1_q7gyr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4l80x"]
 resource_name = "buff"
@@ -73,7 +73,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dtcrd")
 
 [node name="Palm" type="Node3D"]
-script = ExtResource("1_k8u28")
+script = ExtResource("1_q7gyr")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_q8b1b")

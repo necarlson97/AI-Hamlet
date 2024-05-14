@@ -4,3 +4,8 @@
 
 [node name="Sun" type="Node3D"]
 script = ExtResource("1_838rt")
+
+[node name="Label3D" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Day 0, Hour 0"
