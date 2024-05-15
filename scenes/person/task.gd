@@ -48,8 +48,7 @@ func perform(delta: float, person: Person) -> bool:
 		and on_perform(person)
 		and on_perform_delta(delta, person)
 	)
-	if completed:
-		print("Completed %s"%self)
+	if completed: print("Completed %s"%self)
 	return completed
 	
 func on_perform(person: Person) -> bool:
@@ -117,19 +116,19 @@ class HarvestItem extends Task:
 		
 class MakeBlueprint extends Task:
 	# Go to a target vec, and start a building there
-	var building_prefab
+	var building_name: String
+	var blueprint_prefab = preload("res://scenes/buildings/blueprint.tscn")
 	
 	func _init(_priority=2, _target=Vector3(0, 0, 0), _building_name="outhouse"):
 		super(_priority, _target)
-		var building_path = "res://scenes/buildings/%s.tscn"%_building_name
-		building_prefab  = load(building_path)
-		assert(building_prefab, "Unable to load %s (%s)"%[_building_name, building_path])
+		building_name = _building_name
 		name = "MakeBlueprint"
 		
 	func on_perform(person: Person) -> bool:
-		var new_building = building_prefab.instantiate()
-		person.get_tree().root.add_child(new_building)
-		new_building.global_position = person.global_position
+		var new_blueprint = blueprint_prefab.instantiate()
+		new_blueprint.building_name = building_name
+		person.get_tree().root.add_child(new_blueprint)
+		new_blueprint.global_position = person.global_position
 		
 		# Adds tasks to finish the building
 		return true
@@ -196,21 +195,40 @@ class VisitBoard extends Task:
 
 class TimedTask extends Task:
 	# A task that takes X ammount of time to do
-	var days = 1.0
+	var days = 0.5
 	var days_done = 0.0
-	func _init(_priority=2, _target=null, _days=1.0):
+	func _init(_priority=2, _target=null, _days=0.5):
 		super(_priority, _target)
 		days = _days
 		name = "TimedTask"
 		
 	func on_perform_delta(delta: float, person: Person) -> bool:
 		var sun = Utils.static_get_matching_node(person.get_tree().root, "Sun")
-		days_done += delta * sun.get_days_per_second()
-		print("Time left %s (%s-%s)"%[days-days_done, days, days_done])
+		var days_doing = delta * sun.get_days_per_second()
+		days_done += days_doing
+		do_labor(days_doing)
 		return days_done >= days
+		
+	func do_labor(days_doing: float):
+		# Child shadows - takes in how much labor was done this step, in
+		# units of 'days'
+		pass
+		
+	func _to_string():
+		return "(%s) %s - %s time left: %0.1f" % [
+			priority, name, get_target_vec().round(), days-days_done]
 
 class ConstructionLabor extends TimedTask:
-	# Stand around, building the thing. One day's worth of labor
-	func _init(_priority=2, _target=null):
-		super(_priority, _target, 1.0)
+	# Stand around, building the thing. One "day's" worth of labor
+	
+	# For now, saying they work 0.5 of their waking hours
+	static var work_day = 0.5
+	
+	func _init(_priority=1, _target=null):
+		super(_priority, _target, work_day)
 		name = "ConstructionLabor"
+		
+	func do_labor(days_doing: float):
+		# For now, if the construction is gone, it is likely done
+		if (not is_instance_valid(target)): return true
+		target.perform_labor(days_doing)

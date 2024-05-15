@@ -1,5 +1,8 @@
 todo:
-	need to figure out the psychology metrics. Happiness vs sadness? Order vs chaos?
+	* Move construction logic to 'blueprint' which instatniates the 'building' on finish
+	* Make 'priority' not the first task param so it is easier to let default
+
+Psych:
 	Perhaps for now we have the following spectrum (each is actually a 0-1 number, but we break
 	it down to these tags for simplicity)
 		* 'happiness' = joyful vs content vs miserable

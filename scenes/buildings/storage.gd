@@ -17,7 +17,7 @@ func _ready():
 	
 
 var in_storage = []
-func store_item(item):
+func store_item(item) -> bool:
 	# TODO physicaly put as a child of the empty, right?
 	# TODO eh wait this is fucked, can't extend from building and also
 	# have add_item. So maybe blueprint needs to be its own scene thing

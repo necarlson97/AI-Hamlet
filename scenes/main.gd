@@ -10,11 +10,6 @@ func _ready():
 	for i in range(person_count):
 		var new_person = person_prefab.instantiate()
 		add_child(new_person)
-		
-	# TODO for now, any buildings we start with, start built
-	for c in get_children():
-		if c is Building:
-			c.finish_build()
 	
 	var building_count = 0
 	for i in range(building_count):

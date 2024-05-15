@@ -6,6 +6,8 @@
 script = ExtResource("1_838rt")
 
 [node name="Label3D" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 1.0
+offset_top = 65.0
+offset_right = 105.0
+offset_bottom = 88.0
 text = "Day 0, Hour 0"
