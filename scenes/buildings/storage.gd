@@ -14,6 +14,8 @@ func _ready():
 	# then a low priority to fill fully, or something
 	for i in range(capacity):
 		bulliten.task_queue.add(fill_task())
+		
+	labor_needed = 0
 	
 
 var in_storage = []

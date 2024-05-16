@@ -106,12 +106,17 @@ class HarvestItem extends Task:
 		name = "HarvestItem"
 		
 	func on_start(person: Person):
+		set_target(person)
+		
+	func set_target(person):
+		# TODO maybe all tasks should have this? And implement as needed?
 		var producer = item_producers[item_name]
 		target = Utils.find_closest_to_person(person, producer)
 		assert(target, "Unable to find target item producer %s (%s)"%[producer, item_name])
 		
 	func on_perform(person: Person) -> bool:
-		# TODO Pick it up!
+		# TODO do this check in Task.perform?
+		if (not is_instance_valid(target)): set_target(person)
 		return person.pick_up(target.harvest())
 		
 class MakeBlueprint extends Task:
@@ -197,13 +202,16 @@ class TimedTask extends Task:
 	# A task that takes X ammount of time to do
 	var days = 0.5
 	var days_done = 0.0
+	static var sun: Sun
 	func _init(_priority=2, _target=null, _days=0.5):
 		super(_priority, _target)
 		days = _days
 		name = "TimedTask"
 		
 	func on_perform_delta(delta: float, person: Person) -> bool:
-		var sun = Utils.static_get_matching_node(person.get_tree().root, "Sun")
+		if sun == null:
+			sun = Utils.static_get_matching_node(person.get_tree().root, Sun)
+			
 		var days_doing = delta * sun.get_days_per_second()
 		days_done += days_doing
 		do_labor(days_doing)

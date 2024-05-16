@@ -6,7 +6,7 @@ var building_prefab = preload('res://scenes/buildings/building.tscn')
 func _ready():
 	get_node("TimescaleLabel").text = str(Engine.time_scale)
 	# For testing
-	var person_count = 1
+	var person_count = 3
 	for i in range(person_count):
 		var new_person = person_prefab.instantiate()
 		add_child(new_person)

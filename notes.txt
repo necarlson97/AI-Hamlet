@@ -1,5 +1,5 @@
 todo:
-	* Move construction logic to 'blueprint' which instatniates the 'building' on finish
+	* Check 'is isntance valid' for all targets in Task
 	* Make 'priority' not the first task param so it is easier to let default
 
 Psych:

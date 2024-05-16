@@ -69,8 +69,6 @@ func get_progress() -> float:
 	var labor_progress = labor_done / building.labor_needed
 	
 	# TODO debug Label3D?
-	print("item_progress: %s, labor_progress: %s"%[item_progress, labor_progress])
-	
 	return clampf((item_progress + labor_progress) * 0.5, 0, 1)
 
 func update_buld_progress():
